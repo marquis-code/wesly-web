@@ -31,13 +31,6 @@
                                     our products based on user feedback.</dd>
                             </div>
                         </dl>
-                        <!-- <div class="mt-10 flex items-center gap-x-6">
-                            <a href="#contact-section" data-aos="fade-up" data-aos-delay="100"
-                                class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Learn
-                                More</a>
-                            <a href="#contact-section" data-aos="fade-up" data-aos-delay="100" class="text-sm font-semibold leading-6 text-gray-900">Sign Up<span
-                                    aria-hidden="true">→</span></a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="sm:px-6 lg:px-0">
