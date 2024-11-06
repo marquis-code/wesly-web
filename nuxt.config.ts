@@ -11,6 +11,12 @@ export default defineNuxtConfig({
   },
   plugins: ["~/plugins/aos.client.ts"],
   modules: ['@kevinmarrec/nuxt-pwa'],
+  nitro: {
+    prerender: {
+      routes: ['/'],  // Specify only static, easily prerenderable routes here
+      ignore: ['/dashboard', '/dashboard/content', '/dashboard/challenge/create', '/dashboard/challenge']
+    }
+  },
   pwa: {
     workbox: {
       enabled: true

@@ -237,7 +237,7 @@
                       stroke="black" stroke-width="2" stroke-linecap="round"
                       stroke-linejoin="round" />
               </svg>
-              <svg @click="logOut" class="cursor-pointer" width="30" height="30" viewBox="0 0 40 40" fill="none"
+              <svg class="cursor-pointer" width="30" height="30" viewBox="0 0 40 40" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <rect width="40" height="40" rx="12" fill="white" />
                   <path d="M20 23L23 20M23 20L20 17M23 20L12 20" stroke="#14181F" stroke-width="2"
@@ -280,7 +280,6 @@
 
 <script setup lang="ts">
 import { useUser } from '@/composables/auth/user'
-import { logOut } from '@/composables/core/useLogout.ts'
 const route = useRoute()
 console.log(route, 'route here')
 const router = useRouter()
