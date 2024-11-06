@@ -4,7 +4,7 @@
     <div class="bg-white rounded-2xl border border-gray-50 shadow-md p-3 lg:p-6 flex flex-col">
       <div class="flex justify-between items-center mb-4">
       <div>
-        <h2 class="text-xl font-semibold">All Admins</h2>
+        <h2 class="text-lg font-semibold">All Admins</h2>
         <p class="text-gray-500 my-0 py-0 text-xs">Based on Roles</p>
       </div>
         <button class="text-gray-500">
@@ -12,7 +12,7 @@
         </button>
       </div>
 
-    <h3 class="text-2xl font-bold my-0 py-0">{{Object.keys(statData).length}}</h3>
+    <h3 class="text-xl font-bold my-0 py-0">{{Object.keys(statData).length}}</h3>
       <div class="flex space-x-1 mb-4">
         <span class="h-2 flex-1 bg-purple-700 rounded"></span>
         <span class="h-2 flex-1 bg-pink-500 rounded"></span>
@@ -23,10 +23,10 @@
         <div class="flex items-center justify-between" v-for="(value, key) in statData" :key="key">
           <div class="flex items-center">
             <span class="w-3 h-3 bg-purple-700 rounded-full mr-2"></span>
-            <span class="flex-1 text-[#667085]">{{ formatKey(key) }}</span>
+            <span class="flex-1 text-sm text-[#667085]">{{ formatKey(key) }}</span>
           </div>
           <span class="flex items-center">
-            <span class="text-gray-700">{{value}}</span>
+            <span class="text-gray-700 text-sm">{{value}}</span>
             <button class="text-gray-500 ml-2">
               <img src="@/assets/icons/edit-pen.svg" alt="edit pen" />
             </button>
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="w-full pt-4">
-        <button @click="handleAddRole" class="mt-4 w-full py-4 px-4 bg-[#690571] text-base text-white rounded-lg">Add role</button>
+        <button @click="handleAddRole" class="mt-4 w-full py-3 text-sm px-4 bg-[#690571] text-base text-white rounded-lg">Add role</button>
       </div>
     </div>
   </template>

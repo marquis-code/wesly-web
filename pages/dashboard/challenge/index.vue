@@ -18,11 +18,11 @@
       </div>
 
       <!-- Challenges and Details section -->
-      <div class="flex items-start gap-x-3">
+      <div class="lg:flex items-start gap-x-3">
         <!-- Challenge list section (larger width) with independent vertical scroll -->
         <div
           class="border border-gray-50 rounded-2xl p-3 space-y-6 bg-gray-25 transition-all duration-300 overflow-y-scroll"
-          :class="[Object.keys(selectedChallenge).length ? 'w-9/12' : 'w-full']"
+          :class="[Object.keys(selectedChallenge).length ? 'lg:w-8/12' : 'w-full']"
           style="
             max-height: 80vh;
             scrollbar-width: none;
@@ -32,8 +32,11 @@
           <ChallengeManagementChallengeFilter
             @selected="selectedTab"
             @toggleFilter="showFilterModal = true"
+            :selectedChallenge="selectedChallenge"
+             @updateSearch="handleSearchUpdate"
           />
-          <ChallengeManagementChallengeCard
+<section v-if="!searchQuery?.length">
+  <ChallengeManagementChallengeCard
             :filterItem="activeTabFilter"
             v-if="!loading && challengeList?.length"
             :challenges="challengeList"
@@ -42,6 +45,19 @@
           />
           <div v-else-if="!challengeList?.length && loading" class="h-44 w-full bg-slate-300 animate-pulse rounded"></div>
           <div v-else class="h-44 flex justify-center items-center font-medium">No Challenges Available</div>
+</section>
+
+<section v-if="searchQuery?.length">
+  <ChallengeManagementChallengeCard
+            :filterItem="activeTabFilter"
+            v-if="!loading && searchQueryChallenges?.length"
+            :challenges="searchQueryChallenges"
+            @preview="handlePreview"
+            class="cursor-pointer"
+          />
+          <div v-else-if="!searchQueryChallenges?.length && loading" class="h-44 w-full bg-slate-300 animate-pulse rounded"></div>
+          <div v-else class="h-44 flex justify-center items-center font-medium">No Challenges Available for search query {{ searchQuery }}</div>
+</section>
         </div>
 
         <!-- Challenge detail section (smaller width) with independent scroll and sticky position -->
@@ -49,7 +65,7 @@
           class="transition-all duration-300 sticky top-0"
           :class="
             Object.keys(selectedChallenge).length
-              ? 'w-3/12 opacity-100'
+              ? 'lg:w-4/12 opacity-100'
               : 'opacity-0'
           "
           style="max-height: 80vh; overflow-y-scroll; scrollbar-width: none; -ms-overflow-style: none;"
@@ -100,7 +116,7 @@ import { useChallengeList } from "@/composables/admin-mgt/fetch-admin-challenge"
 import { useCreateChallenge } from "@/composables/admin-mgt/create-challenge";
 const { createChallenge, loading: creating } = useCreateChallenge();
 
-const { challengeList, loading, getChallengeList, tabFilter } = useChallengeList();
+const { challengeList, loading, getChallengeList, tabFilter, searchQuery, searchQueryChallenges } = useChallengeList();
 const showFilterModal = ref(false);
 
 const fetchChallenges = async () => {
@@ -121,6 +137,13 @@ const submitChallenge = (payload: any) => {
 definePageMeta({
   layout: "dashboard",
 });
+
+
+// Update searchQuery with the value from the child component
+const handleSearchUpdate = (newQuery: any) => {
+  console.log(newQuery, 'new query here')
+  searchQuery.value = newQuery
+}
 
 const showCreateModal = ref(false)
 

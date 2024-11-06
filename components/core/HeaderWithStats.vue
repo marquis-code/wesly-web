@@ -2,14 +2,15 @@
   <section
     class="lg:flex justify-between space-y-6 lg:space-y-0 bg-white shadow-sm border border-gray-50 rounded-2xl p-6"
   >
-    <div>
-      <h1 class="lg:text-4xl text-2xl font-medium max-w-xs">{{title}}</h1>
+    <div class="space-y-2">
+      <!-- <h1 class="lg:text-6xl text-2xl font-medium max-w-xs">{{title}}</h1> -->
+       <p class="text-6xl max-w-xs">{{title}}</p>
       <p class="text-sm text-[#777980] max-w-xs">
         {{ description }}
       </p>
     </div>
     <div v-if="showAddSection" class="overflow-x-auto scrollbar-hide">
-      <div class="flex w-max space-x-1">
+      <div class="flex w-max-sm space-x-1">
         <div @click="emit('add')" class="flex-shrink-0 w-40 relative border cursor-pointer border-dashed border-[#690571] rounded-2xl mr-1">
           <div class="absolute top-3 left-3">
             <svg
@@ -57,7 +58,7 @@
           <p class="text-[#690571] text-xs">Add a team member</p>
         </div>
         </div>
-        <div v-for="(value, key) in formattedStatData" :key="key" class="flex-shrink-0 w-40 border border-white relative">
+        <div v-for="(value, key) in formattedStatData" :key="key" class="flex-shrink-0 w-36 border border-white relative">
           <img :src="getImageForRole(key)" class="rounded-b-2xl" alt="stat card" />
           <div class="absolute left-0 bottom-0 pl-4 pb-4">
             <h4 class="text-sm py-0 my-0 font-semibold text-white">{{ key }}</h4>

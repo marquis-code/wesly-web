@@ -19,7 +19,7 @@
     <div class="flex items-center mr-4">
       <img src="@/assets/img/avatar-list.png" alt="Avatar" class="w-auto h-5" />
     </div>
-    <span class="text-[#667085] text-xs">{{ challenge?.participants ?? '0' }} Participants</span>
+    <span class="text-[#667085] text-xs">{{ challenge?.participants?.length ?? '0' }} Participants</span>
   </div>
 <div>
 <button class="flex items-center gap-x-2 border rounded-full px-3 py-1.5 border-gray-100" >
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="mb-4">
-        <h4 class="font-semibold mb-2 text-[#1D1F2C]">Admins</h4>
+        <h4 class="font-semibold mb-2 text-sm text-[#1D1F2C]">Admins</h4>
         <ul class="space-y-6">
           <li class="flex items-center mb-2">
             <img src="@/assets/img/active-admin.png" alt="Jay Hargudson" class="w-8 h-8 rounded-full mr-2" />

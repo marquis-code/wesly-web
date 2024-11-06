@@ -17,7 +17,7 @@
             <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="3" cy="3" r="3" fill="#E0E7E7"/>
             </svg>
-            <p class="text-sm text-gray-500">29 Dec 2022 {{Object.keys(previewItem).length}}</p>
+            <p class="text-sm text-gray-500">{{ moment.utc(item?.createdAt).format('DD-MMM-YY') || 'Nil' }}</p>
           </div>
           <div class="flex items-center gap-x-3">
             <div class="text-white bg-[#690571] px-3 py-2 text-xs rounded-full">
@@ -44,24 +44,24 @@
             <p class="text-sm text-gray-500">Tasks</p>
             <p class="text-xs"><span>{{ item?.tasks?.length ?? 0 }}</span></p>
           </div>
-          <div>
-            <p class="text-sm text-gray-500">Created</p>
+          <div class="hidden lg:block">
+            <p class="text-xs text-gray-500">Created</p>
             <p class="text-xs">{{ moment.utc(item.createdAt).format('DD-MMM-YY') || 'Nil' }}</p>
           </div>
-          <div v-if="!Object.keys(previewItem).length">
-            <p class="text-sm text-gray-500">Participants</p>
+          <div :class="[Object.keys(item).length ? 'hidden' : '']">
+            <p class="text-xs text-gray-500">Participants</p>
             <p class="text-xs">{{ item.user.firstName }} {{ item.user.lastName }}</p>
           </div>
-          <div>
-            <p class="text-sm text-gray-500">Start Date</p>
+          <div  class="hidden lg:block">
+            <p class="text-xs text-gray-500">Start Date</p>
             <p class="text-xs">{{ moment.utc(item.startDate).format('DD-MMM-YY') || 'Nil' }}</p>
           </div>
-          <div>
-            <p class="text-sm text-gray-500">Due Date</p>
+          <div  class="hidden lg:block">
+            <p class="text-xs text-gray-500">Due Date</p>
             <p class="text-xs">{{ moment.utc(item.endDate).format('DD-MMM-YY') || 'Nil' }}</p>
           </div>
-          <div v-if="!Object.keys(previewItem).length">
-            <p class="text-sm text-gray-500">Goal</p>
+          <div :class="[Object.keys(item).length ? 'hidden' : '']">
+            <p class="text-xs text-gray-500">Goal</p>
             <p class="text-[#1D1F2C] text-xs flex gap-x-3">
               <img src="@/assets/icons/health.svg" alt="icon" class="w-4 h-4" />
               {{ item.tag }}

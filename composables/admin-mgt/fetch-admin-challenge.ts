@@ -11,6 +11,8 @@ export const filters = ref({
 })
 
 const tabFilter = ref('')
+const searchQuery = ref('') // Add searchQuery ref for search functionality
+const searchQueryChallenges = ref([]) as any
 
 export const useChallengeList = () => {
   const challengeList = ref<any[]>([])
@@ -29,7 +31,8 @@ export const useChallengeList = () => {
         ...(date.startDate && { startDate: date.startDate }),
         ...(date.endDate && { endDate: date.endDate }),
         ...(goals.length && { tag: goals.join(',') }),
-        ...(tabFilter.value && { challengeStatus: tabFilter.value.toUpperCase() }) // Use tabFilter as standalone challenge status
+        ...(tabFilter.value && { challengeStatus: tabFilter.value.toUpperCase() })
+
       }
 
       const response = await adminTeamMgtApiFactory.$_get_admin_challenges(queryParams) as any
@@ -55,5 +58,28 @@ export const useChallengeList = () => {
     getChallengeList() // Refetch when tabFilter changes
   })
 
-  return { getChallengeList, loading, challengeList, tabFilter }
+  watch(searchQuery, () => {
+
+  })
+
+      // Watch for changes in searchQuery to filter the admin teams
+      watch(searchQuery, (newQuery) => {
+        if (!newQuery) {
+            // If search query is empty, reset to full list
+            searchQueryChallenges.value = challengeList.value
+        } else {
+            // Filter based on search query
+            searchQueryChallenges.value = challengeList.value.filter((challenge: any) => {
+                const nameMatches = challenge.name
+                    ?.toLowerCase()
+                    .includes(newQuery.toLowerCase())
+                const descriptionMatches = challenge.description
+                    ?.toLowerCase()
+                    .includes(newQuery.toLowerCase())
+                return nameMatches || descriptionMatches
+            })
+        }
+    })
+
+  return { getChallengeList, loading, challengeList, tabFilter, searchQuery, searchQueryChallenges }
 }

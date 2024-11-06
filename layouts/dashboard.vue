@@ -1,50 +1,13 @@
 
 <template>
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
-<div>
-    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+<main>
+  <div>
     <div v-if="isSidebarOpen" class="relative z-50 lg:hidden bg-[#2A1634]" role="dialog" aria-modal="true">
-      <!--
-        Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-  
-        Entering: "transition-opacity ease-linear duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "transition-opacity ease-linear duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
       <div class="fixed inset-0 bg-gray-900/80" aria-hidden="true"></div>
   
       <div class="fixed inset-0 flex">
-        <!--
-          Off-canvas menu, show/hide based on off-canvas menu state.
   
-          Entering: "transition ease-in-out duration-300 transform"
-            From: "-translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transition ease-in-out duration-300 transform"
-            From: "translate-x-0"
-            To: "-translate-x-full"
-        -->
         <div class="relative mr-16 flex w-full max-w-xs flex-1">
-          <!--
-            Close button, show/hide based on off-canvas menu state.
-  
-            Entering: "ease-in-out duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "ease-in-out duration-300"
-              From: "opacity-100"
-              To: "opacity-0"
-          -->
           <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
             <button @click="isSidebarOpen = false" type="button" class="-m-2.5 p-2.5">
               <span class="sr-only">Close sidebar</span>
@@ -136,7 +99,7 @@
         </div>
         <nav class="flex flex-1 flex-col space-y-[56px]">
             <div class="text-white flex relative gap-y-3 justify-center items-center flex-col">
-                <img v-if="user.photo.image" class="h-44 w-44 rounded-full" :src="user.photo.image" alt="Your Company">
+                <img v-if="user?.photo?.image" class="h-44 w-44 rounded-full" :src="user?.photo?.image" alt="Your Company">
                 <img v-else src="@/assets/img/avatar1.png" alt="" />
                 <div class="flex justify-center items-center flex-col pt-6">
                      <p class="text-[#8C8C8C]">{{user?.email ?? 'Nil'}}</p>
@@ -237,7 +200,7 @@
                       stroke="black" stroke-width="2" stroke-linecap="round"
                       stroke-linejoin="round" />
               </svg>
-              <svg class="cursor-pointer" width="30" height="30" viewBox="0 0 40 40" fill="none"
+              <svg @click="openLogoutModal" class="cursor-pointer" width="30" height="30" viewBox="0 0 40 40" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <rect width="40" height="40" rx="12" fill="white" />
                   <path d="M20 23L23 20M23 20L20 17M23 20L12 20" stroke="#14181F" stroke-width="2"
@@ -268,18 +231,25 @@
       </a>
     </div>
   
-    <main class="py-10 lg:pl-72">
+    <main class="py-10 lg:pl-60">
       <div class="px-4 sm:px-6 lg:px-8">
         <CoreNotification />
-        <slot />
+        <slot></slot>
       </div>
     </main>
   </div>
   
+  <CoreLogoutModal :isOpen="isLogoutModalOpen" @close="closeLogoutModal" @logout="handleLogout" />
+</main>
 </template>
 
 <script setup lang="ts">
 import { useUser } from '@/composables/auth/user'
+import { useRoute, useRouter } from 'vue-router'
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
+
+const showLogoutModal = ref(false)
 const route = useRoute()
 console.log(route, 'route here')
 const router = useRouter()
@@ -287,18 +257,54 @@ const isOpen = ref(false)
 const isSidebarOpen = ref(false)
 const { user } = useUser()
 
-const loggedUser = JSON.parse(localStorage.getItem('user'))
+const loggedUser = ref(null)
 
+// Only access localStorage on the client sid
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    loggedUser.value = JSON.parse(localStorage.getItem('user') || 'null')
+  }
+})
 
 const computedRole = computed(() => {
-  if (!user) return 'Nil';
+  if (!user) return 'Nil'
   if (user?.value?.role) {
-    const roleParts = user.value.role.split('_');
-    return `${roleParts[0]} ${roleParts[1] || ''}`.trim();
+    const roleParts = user.value.role.split('_')
+    return `${roleParts[0]} ${roleParts[1] || ''}`.trim()
   }
-  return 'Nil';
-});
-</script> 
+  return 'Nil'
+})
+
+
+const isLogoutModalOpen = ref(false)
+
+// Open the modal
+const openLogoutModal = () => {
+  isLogoutModalOpen.value = true
+}
+
+// Close the modal
+const closeLogoutModal = () => {
+  isLogoutModalOpen.value = false
+}
+
+// Handle the logout action
+const handleLogout = () => {
+  console.log('Logging out...')
+  localStorage.clear()
+  router.push('/auth')
+  showToast({
+          title: "Success",
+          message: "You are successfully logged out!.",
+          toastType: "success",
+          duration: 3000
+        });
+  // Add your logout logic here (e.g., clearing tokens, redirecting to login page, etc.)
+  closeLogoutModal()
+}
+
+</script>
+
 
 <style scoped>
 .router-link-exact-active {
