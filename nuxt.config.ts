@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       enabled: true
     },
     meta: {
-      title: "Buildr",
+      title: "Chub Admin",
       author: "Marquis",
       mobileAppIOS: false,
       mobileApp: true,
