@@ -372,6 +372,7 @@ const { showToast } = useCustomToast();
 
   definePageMeta({
   layout: "dashboard",
+    // middleware: 'auth'
 });
   
   const setActiveTab = (item: string) => {

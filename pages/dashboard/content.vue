@@ -6,10 +6,10 @@
     
     <div class="lg:flex">
       <!-- Reports Section -->
-    <ContentManagementReportsTable />
+    <ContentManagementReportsTable :showSideContent="showSideContent" />
     
       <!-- Featured Content Section -->
-      <ContentManagementFeaturedContentsTable @toggleModal="showFeatureContentModal = true" />
+      <ContentManagementFeaturedContentsTable v-if="showSideContent" @toggleModal="showSideContent = !showSideContent" />
     </div>
     </section>
     
@@ -145,8 +145,10 @@
 
 <script setup lang="ts">
 const showFeatureContentModal = ref(false);
+const showSideContent = ref(true)
 definePageMeta({
   layout: "dashboard",
+    // middleware: 'auth'
 });
 const statusClass = (status: string) => {
   switch (status) {

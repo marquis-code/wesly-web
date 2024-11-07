@@ -199,6 +199,7 @@ const submitEditChallenge = (payloadInfo: any) => {
 
 definePageMeta({
   layout: "dashboard",
+  // middleware: 'auth'
 });
 
 const showEditModal = ref(false)

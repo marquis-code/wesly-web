@@ -546,7 +546,8 @@ import completedChallengeBadge from "@/assets/img/completed-challenge-badge.png"
 import progressChallengeBadge from "@/assets/img/progress-challenge-badge.png";
 
 definePageMeta({
-    layout: 'dashboard'
+    layout: 'dashboard',
+    //   middleware: 'auth'
 })
 
 const activeTab = ref('project')

@@ -13,6 +13,7 @@ import imageThree from "@/assets/img/admin-stat3.png";
 
 definePageMeta({
   layout: "dashboard",
+    // middleware: 'auth'
 });
 
 const { loading: loadingTeamStats, adminUserDistribution } =

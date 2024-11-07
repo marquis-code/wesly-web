@@ -1,24 +1,27 @@
 <template>
     <div class="flex-1 bg-white shadow-md rounded-lg m-4 border border-gray-50">
-        <div class="border-b px-4 pt-4 lg:flex justify-between">
-         <div class="flex items-center justify-between gap-x-3 mb-4">
-           <h1 class="text-lg font-semibold text-[#1D1F2C]">Reports</h1>
-           <button class="bg-[#E9FAF7] text-[#1A9882] rounded-lg px-2.5 py-1 text-sm">+2 reports</button>
+        <div :class="[showSideContent ? 'flex flex-col' : 'flex']" class="border-b px-4 gap-x-4 pt-4">
+         <div class="flex items-center gap-x-3 mb-4 w-full">
+           <h1 class="text-lg font-medium text-[#1D1F2C]">Reports</h1>
+           <p class="bg-[#E9FAF7] text-[#1A9882] rounded-lg px-6 py-3 text-sm">+2 reports</p>
          </div>
-         <div class="lg:flex space-x-4 w-full">
+         <div class="lg:flex flex-wrap space-y-3 lg:space-x-4 w-full mb-4">
            <div class="relative w-full">
-             <img src="@/assets/icons/search.svg" alt="date-picker" class="absolute left-3 top-2" />
-             <input type="text" placeholder="Search for a challenge" class="px-4 py-2 pl-10 text-sm border rounded-md flex-grow" />
+             <img src="@/assets/icons/search.svg" alt="date-picker" class="absolute left-3 top-3" />
+             <input type="text" placeholder="Search for a challenge" class="px-4 w-full outline-none py-3 pl-10 text-sm border rounded-md flex-grow" />
             </div>
             <div>
-             <button class="px-4 py-2.5 text-gray-500 border rounded-md text-xs flex items-center gap-x-3">
+             <button class="px-6 py-2.5 text-gray-500 border rounded-md text-xs flex items-center gap-x-3">
                <img src="@/assets/icons/date-picker.svg" alt="date-picker" />
-               Select Date</button>
+               <input type="date" />
+              </button>
             </div>
           <div>
-           <button class="px-4 py-2.5 text-gray-500 border rounded-md text-xs flex items-center gap-x-3">
+          <!-- <div class="w-full"> -->
+            <button class="px-10 py-2.5 text-gray-500 border rounded-md text-xs w-full flex items-center gap-x-3">
              <img src="@/assets/icons/filter.svg" alt="date-picker" />
              Filters</button>
+          <!-- </div> -->
           </div>
           </div>
         </div>
@@ -82,3 +85,12 @@
          </div>
        
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  showSideContent: {
+    type: Boolean
+  }
+})
+
+</script>

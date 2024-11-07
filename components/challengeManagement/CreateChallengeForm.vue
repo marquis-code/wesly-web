@@ -254,8 +254,8 @@
                 />
                  </div>
                <div class="w-5/12" >
-                <button @click="createTask" type="button"
-                class="text-[#690571] w-full font-semibold px-4 py-3.5 flex justify-center items-center gap-x-2 text-sm rounded-r-lg bg-[#F4ECFB] focus:outline-none"
+                <button :disabled="isDisabled" @click="createTask" type="button"
+                class="text-[#690571] w-full font-semibold disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3.5 flex justify-center items-center gap-x-2 text-sm rounded-r-lg bg-[#F4ECFB] focus:outline-none"
               >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.3333 7.33334H8.66666V0.666656C8.66666 0.298469 8.36819 0 8 0C7.63181 0 7.33334 0.298469 7.33334 0.666656V7.33331H0.666656C0.298469 7.33334 0 7.63181 0 8C0 8.36819 0.298469 8.66666 0.666656 8.66666H7.33331V15.3333C7.33331 15.7015 7.63178 16 7.99997 16C8.36816 16 8.66662 15.7015 8.66662 15.3333V8.66666H15.3333C15.7015 8.66666 15.9999 8.36819 15.9999 8C16 7.63181 15.7015 7.33334 15.3333 7.33334Z" fill="#690571"/>
@@ -370,6 +370,9 @@ layout: "dashboard",
 const setActiveTab = (item: string) => {
   activeTab.value = item;
 };
+
+
+
 const goalsList = ref([
   {
   label: 'Health',
@@ -545,6 +548,17 @@ editItem.value = null;
 const deleteItem = (index: number) => {
 tasks.value.splice(index, 1);
 };
+
+  // Computed property to determine if form should be disabled
+  const isDisabled = computed(() => {
+  return (
+    !taskItem.value.startDate ||
+    !taskItem.value.endDate ||
+    !taskItem.value.title ||
+    !taskItem.value.task
+  );
+});
+
 </script>
 
 <style scoped>

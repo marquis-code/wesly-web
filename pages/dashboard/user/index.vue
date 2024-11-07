@@ -113,7 +113,8 @@ import { useGetUserStats } from '@/composables/users/getStats'
 const { loading: loadingStats, statsObj } = useGetUserStats()
 const { loading, usersList, searchQuery } = useGetUsersList()
 definePageMeta({
-  layout: 'dashboard'
+  layout: 'dashboard',
+    // middleware: 'auth'
 })
 
 const chartOptions = ref({

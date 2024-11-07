@@ -33,6 +33,7 @@ export const useVerifyOtp = () => {
         console.log(res, 'res here')
         loading.value = false
         if (res.type !== 'ERROR') {
+            console.log(res.data)
             createUser(res.data)
             showToast({
                 title: "Success",

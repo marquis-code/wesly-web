@@ -46,8 +46,9 @@ export const useUser = () => {
 	}
 	const createUser = (user: any) => {
 		console.log(user, 'user from user composable')
-		runtimeData.user.value = user?.data.admin
+		runtimeData.user.value = user?.data?.admin
 		localstorageDate.token.value = user?.accessToken
+		localstorageDate.user.value = user?.data?.admin
 		runtimeData.token.value = user?.accessToken
 	}
 	const updateUser = (user: any) => {

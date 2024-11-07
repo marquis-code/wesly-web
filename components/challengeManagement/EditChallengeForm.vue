@@ -1,5 +1,6 @@
 <template>
-       <section class="px-4">
+   <main>
+    <section class="px-4">
         <div class="bg-white w-full lg:max-w-6xl">
             <form @submit.prevent="handleEditChallenge" class="pt-3" >
               <div class="mb-4">
@@ -45,59 +46,6 @@
                   </label>
                 </div>
               </div>
-
-              <!-- <div class="col-span-full">
-                  <label for="imageUpload" class="block text-sm font-medium leading-6 text-gray-900">Upload challenge image</label>
-                  
-                  <img v-if="editImagePreview" :src="editImagePreview" class="h-14 w-14 rounded-full" />
-                  
-                  <input
-                    v-else
-                    type="file"
-                    name="imageUpload"
-                    id="imageUpload"
-                    @change="onImageChange"
-                    accept="image/*"
-                    class="hidden"
-                  />
-
-                  <div v-if="!editImagePreview" class="mt-2 flex items-center gap-x-3">
-
-                    <label for="imageUpload" class="cursor-pointer">
-                      <svg fill="#000000" width="800px" class="w-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19,13a1,1,0,0,0-1,1v.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.7L9.41,11.12a2.85,2.85,0,0,0-3.93,0L4,12.6V7A1,1,0,0,1,5,6h7a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V14A1,1,0,0,0,19,13ZM5,20a1,1,0,0,1-1-1V15.43l2.9-2.9a.79.79,0,0,1,1.09,0l3.17,3.17,0,0L15.46,20Zm13-1a.89.89,0,0,1-.18.53L13.31,15l.7-.7a.77.77,0,0,1,1.1,0L18,17.21ZM22.71,4.29l-3-3a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-3,3a1,1,0,0,0,1.42,1.42L18,4.41V10a1,1,0,0,0,2,0V4.41l1.29,1.3a1,1,0,0,0,1.42,0A1,1,0,0,0,22.71,4.29Z"/>
-                      </svg>
-                    </label>
-                  </div>
-                </div> -->
-
-               <!-- <div class="col-span-full">
-                <label for="imageUpload" class="block text-sm font-medium leading-6 text-gray-900">Upload challenge image</label>
-                <input
-                 v-if="!imagePreview"
-                  type="file"
-                  name="imageUpload"
-                  id="imageUpload"
-                  @change="onImageChange"
-                  accept="image/*"
-                  class="hidden"
-                />
-                <div  v-if="!imagePreview" class="mt-2 flex items-center gap-x-3">
-                  <label for="imageUpload" class="cursor-pointer">
-                    <svg fill="#000000" width="800px" class="w-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,13a1,1,0,0,0-1,1v.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.7L9.41,11.12a2.85,2.85,0,0,0-3.93,0L4,12.6V7A1,1,0,0,1,5,6h7a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V14A1,1,0,0,0,19,13ZM5,20a1,1,0,0,1-1-1V15.43l2.9-2.9a.79.79,0,0,1,1.09,0l3.17,3.17,0,0L15.46,20Zm13-1a.89.89,0,0,1-.18.53L13.31,15l.7-.7a.77.77,0,0,1,1.1,0L18,17.21ZM22.71,4.29l-3-3a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-3,3a1,1,0,0,0,1.42,1.42L18,4.41V10a1,1,0,0,0,2,0V4.41l1.29,1.3a1,1,0,0,0,1.42,0A1,1,0,0,0,22.71,4.29Z"/></svg>
-                  </label>
-                </div>
-                <img v-if="Object.keys(challengeObj)?.length" :src="challengeObj.imageUrl" class="h-14 w-14 rounded-full" />
-              </div> -->
-        
-              <!-- Image Preview -->
-              <!-- <div class="mb-4">
-                <div v-if="editImagePreview" class="mt-2">
-                  <img :src="editImagePreview" alt="Image Preview" class="max-h-40 h-20 w-20 object-cover rounded-full" />
-                </div>
-              </div>
-               <div class="mb-4">
-              </div> -->
         
               <div class="my-6">
                 <label class="block text-gray-700 mb-2 text-sm" for="description"
@@ -199,9 +147,14 @@
             </div>
         
               <div class="mb-6">
+                <div class="flex justify-between items-center pb-3">
                 <h2 class="font-medium mb-4 text-sm text-[#A3A9B6]">
                   Challenge Settings
                 </h2>
+                <div @click="previewTasks = true" type="button" class="text-xs cursor-pointer bg-black rounded-sm text-white px-3 py-2.5">
+                 <span class="text-white font-semibold" v-if="tasks?.length">{{ tasks.length }}</span>
+                Preview Task</div>
+                </div>
                 <div class="mb-4">
                   <div>
                     <div class="">
@@ -304,8 +257,8 @@
                   />
                    </div>
                  <div class="w-5/12" >
-                  <button @click="createTask" type="button"
-                  class="text-[#690571] w-full font-semibold px-4 py-3.5 flex justify-center items-center gap-x-2 text-sm rounded-r-lg bg-[#F4ECFB] focus:outline-none"
+                  <button :disabled="isDisabled"  @click="createTask" type="button"
+                  class="text-[#690571] w-full font-semibold disabled:cursor-not-allowed disabled:opacity-50 px-4 py-3.5 flex justify-center items-center gap-x-2 text-sm rounded-r-lg bg-[#F4ECFB] focus:outline-none"
                 >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.3333 7.33334H8.66666V0.666656C8.66666 0.298469 8.36819 0 8 0C7.63181 0 7.33334 0.298469 7.33334 0.666656V7.33331H0.666656C0.298469 7.33334 0 7.63181 0 8C0 8.36819 0.298469 8.66666 0.666656 8.66666H7.33331V15.3333C7.33331 15.7015 7.63178 16 7.99997 16C8.36816 16 8.66662 15.7015 8.66662 15.3333V8.66666H15.3333C15.7015 8.66666 15.9999 8.36819 15.9999 8C16 7.63181 15.7015 7.33334 15.3333 7.33334Z" fill="#690571"/>
@@ -324,7 +277,7 @@
               <div class="flex justify-between items-center gap-4 pt-6">
               <div class="w-full">
                 <button
-                 @click="emit('close')"
+                 @click="handleCancel"
                 type="button"
                 class="bg-white border w-full px-6 text-sm border-[#858D9D] text-[#858D9D] py-3.5 rounded-md"
               >
@@ -344,6 +297,42 @@
             </form>
           </div>
        </section>
+       <CoreBaseModal :show="previewTasks" @update:show="previewTasks = false">
+  <main>
+      <h1 class="text-base font-medium mb-4 text-start">Task Manager</h1>
+      <div  v-if="tasks.length">
+        <div v-for="(item, index) in tasks" :key="index" class="bg-gray-25 p-4 border rounded-lg mb-4 flex flex-col justify-start items-start">
+          <div v-if="editIndex !== index" class="flex items-center space-x-4">
+            <span class="text-xl">{{ item.emoji }}</span>
+            <div class="space-y-1">
+              <h2 class="font-semibold text-">{{ item.title }}</h2>
+              <p class="text-gray-600 text-sm">{{ new Date(item.startDate).toLocaleDateString() }} - {{ new Date(item.endDate).toLocaleDateString() }}</p>
+              <p class="text-gray-700 text-sm">{{ item.task }}</p>
+            </div>
+          </div>
+          <div v-else class="w-full">
+            <input v-model="editItem.title" type="text" placeholder="Title" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input :min="today" v-model="editItem.startDate" type="date" placeholder="Start Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input :min="today" v-model="editItem.endDate" type="date" placeholder="End Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input v-model="editItem.task" type="text" placeholder="Task" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input v-model="editItem.emoji" type="text" placeholder="Emoji" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+          </div>
+          <div class="flex space-x-2 pt-4">
+            <button v-if="editIndex !== index" @click="editItemDetails(index)" class="transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#4a4a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
+            </button>
+            <button v-if="editIndex === index" @click="saveItemDetails(index)" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 text-sm transition">Save</button>
+            <button v-if="editIndex === index" @click="cancelEdit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition text-sm">Cancel</button>
+            <button @click="deleteItem(index)" class="transition"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#d0021b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
+          </div>
+        </div>
+      </div>
+      <div v-else class="h-32 w-full border rounded-md font-semibold flex justify-center items-center">
+        No Task Available to preview
+    </div>
+  </main>
+    </CoreBaseModal>
+   </main>
   </template>
   
   <script lang="ts" setup>
@@ -354,6 +343,7 @@
   import { useEditChallenge } from "@/composables/admin-mgt/edit-challenge";
   import { useCreateChallenge } from '@/composables/admin-mgt/create-challenge'
   import { useCustomToast } from '@/composables/core/useCustomToast'
+  import { useRoute } from 'vue-router';
 const { showToast } = useCustomToast();
   const { editChallenge, loading, localChallenge, challengeObj } = useEditChallenge();
   const activeTab = ref("tasks");
@@ -362,6 +352,7 @@ const { showToast } = useCustomToast();
   const { latitude, longitude, setCoordinates } = useGeolocation()
   
   const emit = defineEmits(['close', 'edit'])
+  const previewTasks = ref(false)
   
   // const handleCloseChallenge = () => {
   //   emit('close')
@@ -422,6 +413,16 @@ const editImagePreview = computed(() => challengeObj.value.imageUrl || null);
     emoji: null
   }) as any
 
+  // Computed property to determine if form should be disabled
+const isDisabled = computed(() => {
+  return (
+    !taskItem.value.startDate ||
+    !taskItem.value.endDate ||
+    !taskItem.value.title ||
+    !taskItem.value.task
+  );
+});
+
   const tasks = ref([]);
   
   const addTask = () => {
@@ -455,6 +456,7 @@ const editImagePreview = computed(() => challengeObj.value.imageUrl || null);
     const payload = {...challengeObj.value, duration: durationInSeconds, tasks: tasks.value  }
     // console.log(payload, 'payload')
     // emit('edit', payload)
+    // console.log(route, payload)
     await editChallenge(route.query.id, payload)
   };
 
@@ -522,6 +524,12 @@ const createTask = () => {
       task: '',
       emoji: '',
     };
+    showToast({
+        title: "Success",
+        message: "Task was added successfully.",
+        toastType: "success",
+        duration: 3000
+      });
   } else {
     showToast({
         title: "Error",
@@ -555,6 +563,11 @@ const cancelEdit = () => {
 const deleteItem = (index: number) => {
   tasks.value.splice(index, 1);
 };
+
+const handleCancel = () => {
+  router.replace({ path: router.currentRoute.value.path });
+  emit('close')
+}
   </script>
   
   <style scoped>

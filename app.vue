@@ -32,7 +32,7 @@
   }
 </style>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { provide, ref, onMounted } from 'vue';
 import { useRouter } from 'nuxt/app';
 
@@ -61,4 +61,71 @@ onMounted(() => {
     }, 500); // Allow transition duration before hiding splash completely
   }, 3000); // Display splash for 3 seconds
 });
+</script> -->
+
+<script setup lang="ts">
+import { useUser } from '@/composables/auth/user'
+import { provide, ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'nuxt/app';
+import { useCustomToast } from '@/composables/core/useCustomToast';
+const { user, logOut, token, isLoggedIn } = useUser()
+
+import { visible, toastData } from '@/composables/core/useCustomToast';
+
+// Provide toast state globally
+provide('toastVisible', visible);
+provide('toastData', toastData);
+
+const showSplash = ref(true);
+const splashTransitioning = ref(false);
+const router = useRouter();
+const route = useRoute();
+
+// Function to check if the user is logged in
+
+// onMounted(() => {
+//   // Show splash screen for 3 seconds, then transition out
+//   setTimeout(() => {
+//     splashTransitioning.value = true;
+//     setTimeout(() => {
+//       showSplash.value = false;
+
+//       if (isLoggedIn.value) {
+//         // If user is authenticated, redirect to the intended route or dashboard
+//         const intendedRoute = localStorage.getItem('intendedRoute') || '/dashboard';
+//         router.push(intendedRoute);
+//         localStorage.removeItem('intendedRoute'); // Clear after redirect
+//       } else {
+//         // If user is not authenticated, store current route and redirect to /auth
+//         localStorage.setItem('intendedRoute', route.fullPath);
+//         router.push('/auth');
+//       }
+//     }, 500); // Allow transition duration before hiding splash completely
+//   }, 2000); // Display splash for 3 seconds
+// });
+
+onMounted(() => {
+  // Show splash screen for a shorter duration, e.g., 1.5 seconds
+  setTimeout(() => {
+    splashTransitioning.value = true; // Start the transition out
+  }, 1500); // Adjust display duration for the splash screen
+
+  // Complete splash transition and route redirection
+  setTimeout(() => {
+    showSplash.value = false;
+
+    // if (isLoggedIn.value) {
+    //   // Redirect authenticated user to the intended route or dashboard
+    //   const intendedRoute = localStorage.getItem('intendedRoute') || '/dashboard';
+    //   router.push(intendedRoute);
+    //   localStorage.removeItem('intendedRoute'); // Clear after redirect
+    // } else {
+    //   // Store current route and redirect unauthenticated user to /auth
+    //   localStorage.setItem('intendedRoute', route.fullPath);
+    //   router.push('/auth');
+    // }
+  }, 2000); // 500ms after transition starts, hide splash and redirect
+});
+
 </script>
+
