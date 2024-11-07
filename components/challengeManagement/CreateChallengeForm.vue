@@ -1,6 +1,5 @@
 <template>
-  <main class="border rounded-xl gap-x-4 border-gray-200">
-    <section class="lg:flex space-y-6 lg:space-y-6 rounded-lg gap-x-4 px-5 pb-6">
+  <main class="px-4">
      <section class="">
       <div class="bg-white w-full">
           <!-- {{ challengeObj }} -->
@@ -62,7 +61,7 @@
               <div class="w-1/2 mr-2">
                 <label class="block text-xs text-gray-700">Start Date</label>
                 <div class="relative mt-2">
-                  <input v-model="challengeObj.startDate" type="date" placeholder="DD/MM/YY" class="w-full text-sm p-2 py-3 rounded-md pl-10 outline-none border border-gray-300"/>
+                  <input :min="today" v-model="challengeObj.startDate" type="date" placeholder="DD/MM/YY" class="w-full text-sm p-2 py-3 rounded-md pl-10 outline-none border border-gray-100"/>
                   <span class="absolute inset-y-0 left-4 flex items-center pr-3 text-gray-400">
                     <svg width="20" height="20" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clip-path="url(#clip0_6661_7698)">
@@ -84,7 +83,7 @@
                 <label class="block text-xs text-gray-700">End Date</label>
                </div>
                 <div class="relative mt-2">
-                  <input v-model="challengeObj.endDate" type="date" placeholder="DD/MM/YY" class="w-full text-sm p-2 py-3 rounded-md pl-10 outline-none border border-gray-300"/>
+                  <input  :min="today" v-model="challengeObj.endDate" type="date" placeholder="DD/MM/YY" class="w-full text-sm p-2 py-3 rounded-md pl-10 outline-none border border-gray-100"/>
                   <span class="absolute inset-y-0 left-4 flex items-center pr-3 text-gray-400">
                     <svg width="20" height="20" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clip-path="url(#clip0_6661_7698)">
@@ -149,7 +148,9 @@
               <h2 class="font-medium mb-4 text-sm text-[#A3A9B6]">
                 Challenge Settings
               </h2>
-              <div @click="previewTasks = true" type="button" class="text-sm cursor-pointer bg-black rounded-lg text-white px-3 py-2.5">Preview Task</div>
+              <div @click="previewTasks = true" type="button" class="text-xs cursor-pointer bg-black rounded-sm text-white px-3 py-2.5">
+                 <span class="text-white font-semibold" v-if="tasks?.length">{{ tasks.length }}</span>
+                Preview Task</div>
              </div>
               <div class="mb-4">
                 <div>
@@ -181,12 +182,12 @@
                 </div>
               </div>        
               <div v-if="activeTab === 'tasks'" class="mb-4">
-                <label class="block text-gray-700 mb-2 text-sm" for="task">Add Task {{selectedEmoji}}</label>
+                <label class="block text-gray-700 mb-2 text-sm font-semibold" for="task">Add Task {{selectedEmoji}}</label>
                 <div class="flex  pb-4">
                   <div class="w-1/2 mr-2">
                     <label class="block text-xs text-gray-700">Start Date</label>
                     <div class="relative mt-2">
-                      <input v-model="taskItem.startDate" type="date" placeholder="DD/MM/YY" class="w-full p-2 py-2 rounded-md pl-10 outline-none border border-gray-300"/>
+                      <input v-model="taskItem.startDate" :min="today" type="date" placeholder="DD/MM/YY" class="w-full p-2 py-3.5 text-sm rounded-md pl-10 outline-none border border-gray-100"/>
                       <span class="absolute inset-y-0 left-4 flex items-center pr-3 text-gray-400">
                         <svg width="20" height="20" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_6661_7698)">
@@ -209,7 +210,7 @@
                     <p class="text-[#690571] font-medium text-xs cursor-pointer">Schedule </p>
                    </div>
                     <div class="relative mt-2">
-                      <input v-model="taskItem.endDate" type="date" placeholder="DD/MM/YY" class="w-full p-2 py-2 rounded-md pl-10 outline-none border border-gray-300"/>
+                      <input :min="today" v-model="taskItem.endDate" type="date" placeholder="DD/MM/YY" class="w-full p-2 py-3.5 text-sm rounded-md pl-10 outline-none border border-gray-100"/>
                       <span class="absolute inset-y-0 left-4 flex items-center pr-3 text-gray-400">
                         <svg width="20" height="20" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_6661_7698)">
@@ -227,7 +228,7 @@
                   </div>
                 </div>
                 <div class="pt-1">
-                  <label class="block text-gray-700 mb-2 text-sm" for="description"
+                  <label class="block text-gray-700 mb-2 text-sm" for="emoji"
                   >Select Emoji {{ selectedEmojiItem }}</label
                 >
                 
@@ -235,17 +236,17 @@
                 </div>
             <div class="mt-3">
               <input
-              class="w-full flex-grow px-4 py-3 outline-none border rounded-lg"
+              class="w-full flex-grow px-4 text-sm py-3 outline-none border rounded-lg"
               type="text"
               id="task"
               v-model="taskItem.task"
               placeholder="Enter task title"
             />
             </div>
-                <div class="flex gap-x-4 pt-4">
+                <div class="flex pt-4">
                  <div class="flex-grow w-full">
                   <input
-                  class="w-full flex-grow px-4 py-3 outline-none border rounded-l-lg"
+                  class="w-full flex-grow px-4 py-3 outline-none text-sm border rounded-l-lg"
                   type="text"
                   id="task"
                   v-model="taskItem.title"
@@ -301,44 +302,6 @@
           </form>
         </div>
      </section>
-        <!-- <div class="custom-scrollbar bg-white w-full lg:max-w-6xl border rounded-xl p-6">
-       <div v-if="!tasks" class="flex justify-center items-center place-content-center min-h-screen" >
-          <div  class="flex justify-center font-semibold items-center space-y-4 flex-col">
-              <img src="@/assets/icons/not-found.svg" alt="" />
-              <p>No Tasks Available</p>
-          </div>
-    </div>
-    <div v-if="tasks" class="">
-      <h1 class="text-sm font-medium mb-4 text-start">Task Manager</h1>
-      <div v-for="(item, index) in tasks" :key="index" class="bg-gray-25 p-4 border rounded-lg mb-4 flex flex-col justify-start items-start">
-        <div v-if="editIndex !== index" class="flex items-center space-x-4">
-          <span class="text-xl">{{ item.emoji }}</span>
-          <div class="space-y-1">
-            <h2 class="font-semibold text-">{{ item.title }}</h2>
-            <p class="text-gray-600 text-sm">{{ new Date(item.startDate).toLocaleDateString() }} - {{ new Date(item.endDate).toLocaleDateString() }}</p>
-            <p class="text-gray-700 text-sm">{{ item.task }}</p>
-          </div>
-        </div>
-        <div v-else class="w-full">
-          <input v-model="editItem.title" type="text" placeholder="Title" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-          <input v-model="editItem.startDate" type="date" placeholder="Start Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-          <input v-model="editItem.endDate" type="date" placeholder="End Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-          <input v-model="editItem.task" type="text" placeholder="Task" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-          <input v-model="editItem.emoji" type="text" placeholder="Emoji" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-        </div>
-        <div class="flex space-x-2 pt-4">
-          <button v-if="editIndex !== index" @click="editItemDetails(index)" class="transition">
-              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#4a4a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon><line x1="3" y1="22" x2="21" y2="22"></line></svg>
-          </button>
-          <button v-if="editIndex === index" @click="saveItemDetails(index)" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 text-sm transition">Save</button>
-          <button v-if="editIndex === index" @click="cancelEdit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition text-sm">Cancel</button>
-          <button @click="deleteItem(index)" class="transition"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#d0021b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
-        </div>
-      </div>
-    </div>
-        </div>  -->
-    </section>
-
      <CoreBaseModal :show="previewTasks" @update:show="previewTasks = false">
   <main>
       <h1 class="text-base font-medium mb-4 text-start">Task Manager</h1>
@@ -354,8 +317,8 @@
           </div>
           <div v-else class="w-full">
             <input v-model="editItem.title" type="text" placeholder="Title" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-            <input v-model="editItem.startDate" type="date" placeholder="Start Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
-            <input v-model="editItem.endDate" type="date" placeholder="End Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input :min="today" v-model="editItem.startDate" type="date" placeholder="Start Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
+            <input :min="today" v-model="editItem.endDate" type="date" placeholder="End Date" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
             <input v-model="editItem.task" type="text" placeholder="Task" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
             <input v-model="editItem.emoji" type="text" placeholder="Emoji" class="w-full mb-2 p-2 border rounded-md outline-none py-3">
           </div>
@@ -395,6 +358,8 @@ const emit = defineEmits(['close', 'challenge-payload'])
 const handleCloseChallenge = () => {
   emit('close')
 }
+
+const today = ref(new Date().toISOString().split('T')[0]);
 
 const previewTasks = ref(false)
 
@@ -541,6 +506,12 @@ if (taskItem.value.title.length && taskItem.value.startDate.length && taskItem.v
     task: '',
     emoji: '',
   };
+  showToast({
+        title: "Success",
+        message: "Task was added successfully.",
+        toastType: "success",
+        duration: 3000
+      });
 } else {
   showToast({
         title: "Error",

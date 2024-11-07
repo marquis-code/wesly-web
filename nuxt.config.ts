@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: ["~/plugins/aos.client.ts"],
-  modules: ['@kevinmarrec/nuxt-pwa'],
+  modules: ['@kevinmarrec/nuxt-pwa', "nuxt-emoji-picker"],
   nitro: {
     prerender: {
       routes: ['/'],  // Specify only static, easily prerenderable routes here

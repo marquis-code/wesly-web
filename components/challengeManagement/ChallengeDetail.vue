@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="bg-white w-full p-3 border border-gray-50 rounded-lg shadow-lg">
       <div class="bg-[#FB3A82] p-6 rounded-lg mb-4 py-20 flex justify-between items-end relative">
         <h2 class="text-2xl font-semibold text-white max-w-xs">{{challenge?.name ?? 'Nil'}}</h2>
@@ -154,10 +154,15 @@
   }
  })
 
+ const emit = defineEmits(['editChallenge'])
+
  const router = useRouter()
 
  const handleEditChallenge = () => {
-  router.push(`/dashboard/challenge/${props.challenge.id}`)
- }
+  emit('editChallenge', props.challenge)
+  const currentUrl = new URL(window.location.href)
+  currentUrl.searchParams.set('id', props.challenge.id)
+  window.history.pushState(null, '', currentUrl.toString())
+}
   </script>
   

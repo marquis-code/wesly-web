@@ -4,20 +4,26 @@
     <div class="space-y-10">
       <div class="space-y-10">
         <ChallengeManagementHeader
-          @featured="challengeType = 'featured'"
+          @featured="showFeatureChallengeType = !showFeatureChallengeType"
           @create-challenge="handleCreateChallenge"
           class="rounded-xl border-[0.5px] border-gray-100"
         />
       </div>
 
-      <div v-if="challengeType === 'featured'">
+      <!-- <div v-if="challengeType === 'featured'">
+        <ChallengeManagementFeatured
+          v-if="!loading && challengeList.length"
+          :challenges="challengeList"
+        />
+      </div> -->
+
+      <div v-if="showFeatureChallengeType">
         <ChallengeManagementFeatured
           v-if="!loading && challengeList.length"
           :challenges="challengeList"
         />
       </div>
 
-      <!-- Challenges and Details section -->
       <div class="lg:flex items-start gap-x-3">
         <!-- Challenge list section (larger width) with independent vertical scroll -->
         <div
@@ -71,6 +77,7 @@
           style="max-height: 80vh; overflow-y-scroll; scrollbar-width: none; -ms-overflow-style: none;"
         >
           <ChallengeManagementChallengeDetail
+           @edit-challenge="handleChallengeEdit"
             :challenge="selectedChallenge"
             v-if="Object.keys(selectedChallenge).length"
           />
@@ -87,7 +94,6 @@
       @close="closeModal"
       @apply="fetchChallenges"
     />
-
     <CoreSideDrawer :showSideDescription="false" title="Create Challenge" description="Please fill the form to create a challenge" @close="showCreateModal = false" :show="showCreateModal" >
       <template #content>
         <section class="p-3">
@@ -97,7 +103,7 @@
 
     <template #action-btn>
       <div class="flex justify-end space-x-3">
-        <button @click="closeModal"  type="button" class="rounded-md bg-white px-3 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
+        <button @click="showCreateModal = false"  type="button" class="rounded-md bg-white px-3 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
           <button
           type="button"
           class="rounded-md bg-white px-3 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -108,16 +114,62 @@
       </div>
     </template>
      </CoreSideDrawer>
+     <CoreSideDrawer :showSideDescription="false" title="Edit Challenge" description="Please fill the form to edit a challenge" @close="showEditModal = false" :show="showEditModal" >
+      <template #content>
+        <section class="p-3">
+         <ChallengeManagementEditChallengeForm @close="showEditModal = false" @edit="submitEditChallenge" class=""/>
+        </section>
+      </template>
+<!-- 
+      <template #action-btn>
+      <div class="flex justify-end space-x-3">
+        <button @click="showEditModal = false"  type="button" class="rounded-md bg-white px-3 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
+          <button
+          type="button"
+          class="rounded-md bg-white px-3 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        >
+          Save to drafts
+        </button>
+        <button :disabled="editing" @click="submitEditChallenge" class="inline-flex disabled:cursor-not-allowed disabled:opacity-25 justify-center rounded-md bg-[#690571] px-3 py-3 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ">{{ editing ? 'processing..'  : 'Save Challenge'}} </button>
+      </div>
+    </template> -->
+
+    <!-- <template #action-btn>
+      <div class="flex justify-between items-center gap-4 pt-6">
+              <div class="w-full">
+                <button
+                 @click="showEditModal = false;"
+                type="button"
+                class="bg-white border w-full px-6 text-sm border-[#858D9D] text-[#858D9D] py-3.5 rounded-md"
+              >
+                Cancel
+              </button>
+              </div>
+              <div class="w-full">
+                <button
+                @click="submitEditChallenge"
+                :disabled="editing"
+                class="bg-[#690571] w-full disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white px-4 py-3.5 rounded-md"
+              > 
+              {{ editing ? 'processing...' : 'Save Challenge' }}
+              </button>
+              </div>
+              </div>
+    </template> -->
+     </CoreSideDrawer>
   </main>
 </template>
 
 <script setup lang="ts">
 import { useChallengeList } from "@/composables/admin-mgt/fetch-admin-challenge";
 import { useCreateChallenge } from "@/composables/admin-mgt/create-challenge";
+import { useEditChallenge } from "@/composables/admin-mgt/edit-challenge";
 const { createChallenge, loading: creating } = useCreateChallenge();
-
-const { challengeList, loading, getChallengeList, tabFilter, searchQuery, searchQueryChallenges } = useChallengeList();
+const { editChallenge, loading: editing, localChallenge, challengeObj } = useEditChallenge();
+const showFeatureChallengeType = ref(false)
+const { challengeList, loading, getChallengeList, searchQuery, searchQueryChallenges } = useChallengeList();
 const showFilterModal = ref(false);
+const route = useRoute()
 
 const fetchChallenges = async () => {
   await getChallengeList(); // Trigger API call with current filters
@@ -134,9 +186,27 @@ const submitChallenge = (payload: any) => {
     });
 }
 
+const submitEditChallenge = (payloadInfo: any) => {
+   console.log(payloadInfo, 'hello', route.query.id)
+  // editChallenge(payloadInfo)
+  //   .then(response => {
+  //     // handle successful creation
+  //   })
+  //   .catch(error => {
+  //     // handle errors
+  //   });
+}
+
 definePageMeta({
   layout: "dashboard",
 });
+
+const showEditModal = ref(false)
+
+
+const handleChallengeEdit = () => {
+  showEditModal.value = true
+}
 
 
 // Update searchQuery with the value from the child component

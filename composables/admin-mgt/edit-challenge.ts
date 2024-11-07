@@ -36,61 +36,7 @@ export const useEditChallenge = () => {
   const error = ref<string | null>(null);
   const localChallenge = ref({});
 
-// Helper function to unwrap proxy and reactive values
-// const convertToPlainObject = (challengeData: any) => {
-//   const unwrap = (value: any) => {
-//     if (isRef(value)) {
-//       return unref(value);
-//     }
-//     if (isReactive(value)) {
-//       return { ...value };
-//     }
-//     return value;
-//   };
 
-//   return {
-//     challengeStatus: unwrap(challengeData.challengeStatus),
-//     challengeType: unwrap(challengeData.challengeType),
-//     color: unwrap(challengeData.color),
-//     coordinates: unwrap(challengeData.coordinates), // unwrap the Proxy array
-//     description: unwrap(challengeData.description),
-//     duration: unwrap(challengeData.duration), // unwrap computed
-//     endDate: unwrap(challengeData.endDate),
-//     imageUrl: unwrap(challengeData.imageUrl),
-//     name: unwrap(challengeData.name),
-//     reminderOn: unwrap(challengeData.reminderOn),
-//     reminderTime: unwrap(challengeData.reminderTime),
-//     requireVerification: unwrap(challengeData.requireVerification),
-//     startDate: unwrap(challengeData.startDate),
-//     tag: unwrap(challengeData.tag),
-//     taskVerification: unwrap(challengeData.taskVerification), // unwrap Proxy object
-//     tasks: unwrap(challengeData.tasks), // unwrap Proxy array
-//   };
-// };
-
-// const editChallenge = async (payload: Record<string, any>) => {
-//   try {
-//     loading.value = true;
-//     payload.startDate = new Date(payload.startDate).getTime();
-//     payload.endDate = new Date(payload.endDate).getTime();
-
-//     // Convert reactive or proxy data to a plain object
-//     const normalObject = convertToPlainObject(payload);
-//     console.log(route.params.id, 'Payload sent to API:', normalObject);
-//     const res = await adminTeamMgtApiFactory.$_update_admin_challenges(route.params.id, normalObject);
-//     console.log('Full API response:', res);
-
-//     if (res.type !== "ERROR") {
-//       router.push('/dashboard/challenge');
-//     } else {
-//       console.error('API error response:', res);
-//     }
-//   } catch (error) {
-//     console.error('Error during challenge update:', error);
-//   } finally {
-//     loading.value = false;
-//   }
-// };  
 
 const convertToPlainObject = (challengeData: any) => {
   const unwrap = (value: any) => {
@@ -131,18 +77,14 @@ const convertToPlainObject = (challengeData: any) => {
   };
 };
 
-const editChallenge = async (payload: Record<string, any>) => {
+const editChallenge = async (challengeId: string, payload: Record<string, any>) => {
+  const route = useRoute();
   try {
     loading.value = true;
     payload.startDate = new Date(payload.startDate).getTime();
     payload.endDate = new Date(payload.endDate).getTime();
-
-    // Convert reactive or proxy data to a plain object
     const normalObject = convertToPlainObject(payload);
-    console.log(route.params.id, 'Payload sent to API:', normalObject);
-    const res = await adminTeamMgtApiFactory.$_update_admin_challenges(route.params.id, normalObject);
-    console.log('Full API response:', res);
-
+    const res = await adminTeamMgtApiFactory.$_update_admin_challenges(challengeId, normalObject) as any
     if (res.type !== "ERROR") {
       showToast({
         title: "Success",

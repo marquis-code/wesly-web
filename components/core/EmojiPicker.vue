@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-2">
+  <div class="w-full">
       <NuxtEmojiPicker
         :hide-search="false"
         style="width: 100%;"
