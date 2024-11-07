@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       mobileAppIOS: false,
       mobileApp: true,
       description:
-        "specialize in software development, product design, and bespoke solutions to help businesses innovate and thrive in the digital age.",
+        "Fun, Community, Growth",
       theme_color: "#27396B",
       background_color: "#27396B",
       display: "standalone",
