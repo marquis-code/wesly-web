@@ -237,7 +237,8 @@ const closeDropdown = () => {
 
 const handleDropdownClick = (action: any, item: any) => {
   if (action === "view") {
-    return router.push(`/dashboard/tenant-mgt/${item.id}`);
+    localStorage.setItem('selected-user', JSON.stringify(item))
+    return router.push(`/dashboard/user/${item.id}`);
   }
 
   if (action === "update") {

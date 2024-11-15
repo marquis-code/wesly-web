@@ -241,10 +241,6 @@
         </div>
       </form>
     </div>
-
-    <div v-if="activeTab !== 'profile' || 'password'" class="flex justify-center items-center border-gray-100 font-semibold place-content-center border h-44 rounded-lg">
-       <p>Coming Soon</p>
-    </div>
    </div>
 
   </main>

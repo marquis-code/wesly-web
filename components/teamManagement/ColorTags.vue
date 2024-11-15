@@ -6,7 +6,7 @@
     <div class="mt-1 flex space-x-3">
       <button
       type="button"
-       @click="showColorModal = !showColorModal"
+       @click="showColorModal = true"
       >
         <svg
           width="32"
@@ -87,20 +87,24 @@
        :show="showColorModal"
         @update:show="showColorModal = false"
   > -->
-    <CoreColorPicker v-if="showColorModal" />
+    <CoreColorPicker :show="showColorModal" @close="closeColorPicker"  />
   <!-- </CoreBaseModal> -->
   </main>
 </template>
 
 <script setup lang="ts">
 const activeTag = ref('super-admin')
+const showColorModal = ref(false)
 
 const emit = defineEmits(['role-tag'])
+
+const closeColorPicker = () => {
+  showColorModal.value = false
+}
 
 const setActiveTag = (tag: string) => {
   activeTag.value = tag
   emit('role-tag', activeTag.value)
 }
 
-const showColorModal = ref(false)
 </script>

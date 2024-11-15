@@ -55,7 +55,7 @@
               stroke-linejoin="round"
             />
           </svg>
-          <p class="text-[#690571] text-xs">Add a team member</p>
+          <p class="text-[#690571] text-xs">{{ customAddText }}</p>
         </div>
         </div>
         <div v-for="(value, key) in formattedStatData" :key="key" class="flex-shrink-0 w-36 border border-white relative">
@@ -97,7 +97,11 @@ const props = defineProps({
     statData: {
       type: Object,
       default: () => {}
-    }
+    },
+    customAddText: {
+        type: String,
+        default: 'Add a team member'
+    },
 })
 
 // const formattedStatData = computed(() => {

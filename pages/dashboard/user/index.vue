@@ -1,7 +1,14 @@
 <template>
  <main>
   <section class="space-y-10" >
-    <CoreHeaderWithStats :showAddSection="false" title="Manage App Users" description="Create and manage admins, content admins and challenge admins" />
+    <CoreHeaderWithStats
+       :statData="adminUserDistribution"
+        @add="showNewGroupModal = true"
+        title="Manage App Users"
+        description="Create and manage admins, content admins and challenge admins"
+        :stats="userStatsInfo"
+        customAddText="Create new user group"
+      />
     <div class="bg-white lg:flex items-start gap-x-10">
       <div  v-if="!loadingStats && Object.keys(statsObj).length" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 lg:w-4/12">
         <userStats :statsObj="statsObj" />
@@ -104,11 +111,18 @@
       
     </div>
   </section>
+  <ContentManagementNewGroupModal @close="showNewGroupModal = false" v-if="showNewGroupModal"  />
  </main>
 </template>
 
 <script setup lang="ts">
 import { useGetUsersList } from '@/composables/users/getUsersList'
+import imageOne from "@/assets/img/admin-stat1.png";
+import imageTwo from "@/assets/img/admin-stat2.png";
+import imageThree from "@/assets/img/admin-stat3.png";
+import { useAdminUserDistribution } from "@/composables/admin-mgt/fetchAdminUsersDistribution";
+const { loading: loadingTeamStats, adminUserDistribution } =
+  useAdminUserDistribution();
 import { useGetUserStats } from '@/composables/users/getStats'
 const { loading: loadingStats, statsObj } = useGetUserStats()
 const { loading, usersList, searchQuery } = useGetUsersList()
@@ -116,6 +130,7 @@ definePageMeta({
   layout: 'dashboard',
     // middleware: 'auth'
 })
+const showNewGroupModal = ref(false)
 
 const chartOptions = ref({
   chart: {
@@ -153,6 +168,33 @@ const chartSeries = ref([
     name: 'Drop-off',
     data: [900, 1100, 800, 1300, 1040, 850, 1050, 1100, 1150, 1100, 1000, 1000]
   }
+]);
+
+const userStatsInfo = ref([
+  {
+    image: imageOne,
+    key: "",
+    title: "USER ADMIN",
+    count: "0",
+  },
+  {
+    image: imageTwo,
+    key: "",
+    title: "USER ADMIN",
+    count: "0",
+  },
+  {
+    image: imageThree,
+    key: "",
+    title: "USER ADMIN",
+    count: "0",
+  },
+  {
+    image: imageOne,
+    key: "",
+    title: "USER ADMIN",
+    count: "0",
+  },
 ]);
 </script>
 

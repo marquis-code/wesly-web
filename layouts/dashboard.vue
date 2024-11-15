@@ -93,18 +93,19 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-[#2A1634] px-6">
+      <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-[#2A1634] px-6 pt-10">
         <div class="flex h-16 shrink-0 items-center">
           <img class="h-8 w-auto" src="@/assets/img/logo.png" alt="Your Company">
         </div>
         <nav class="flex flex-1 flex-col space-y-[56px]">
             <div class="text-white flex relative gap-y-3 justify-center items-center flex-col">
-                <img v-if="user?.photo?.image" class="h-44 w-44 rounded-full" :src="user?.photo?.image" alt="Your Company">
+                <img v-if="user?.photo?.image" class="h-32 w-32 rounded-full" :src="user?.photo?.image" alt="Your Company">
                 <img v-else src="@/assets/img/avatar1.png" alt="" />
-                <div class="flex justify-center items-center flex-col pt-6">
+                <div class="flex justify-center items-center space-y-3 flex-col mt-4">
+                  <p class="text-[#FFFFFF] text-lg">{{user?.firstName ?? 'Nil'}} {{user?.lastName ?? 'Nil'}}</p>
                      <p class="text-[#8C8C8C]">{{user?.email ?? 'Nil'}}</p>
                 </div>
-                <p class="absolute bottom-10 text-sm text-[#690571] font-semibold bg-[#F4ECFB] px-3 py-2 rounded-xl">{{computedRole}}</p>
+                <p class="absolute bottom-16 text-sm text-[#690571] font-semibold bg-[#F4ECFB] px-3 py-2 rounded-xl">{{computedRole}}</p>
             </div>
           <ul role="list" class="flex flex-1 flex-col gap-y-7">
             <li>

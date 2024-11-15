@@ -56,8 +56,8 @@
                 </NuxtLink>
             </div>
         </div>
-        <div class="flex justify-start items-start gap-x-10">
-            <section class="max-w-sm w-full border p-2 bg-white border-gray-100 rounded-lg">
+        <div class="lg:flex space-y-6 lg:space-y-0 justify-start items-start gap-x-10">
+            <section class="lg:max-w-sm w-full border p-2 bg-white border-gray-100 rounded-lg">
                 <div class="bg-[#F4ECFB] w- h-40 relative rounded-lg">
                 <div class="flex justify-center items-center">
                     <div class="flex flex-col items-center absolute top-24">
@@ -86,9 +86,11 @@
                             </clipPath>
                             </defs>
                       </svg> 
+
+                      <!-- {{ userInfo }} -->
                       <div>
                         <label class="text-gray-500">User ID</label>
-                        <div class="text-gray-900 font-medium">ID-011221</div>
+                        <div class="text-gray-900 font-medium">{{ userInfo?.id ?? 'Nil' }}</div>
                       </div>
                     </div>
                     <div class="text-gray-600 flex gap-x-3">
@@ -107,7 +109,7 @@
                             
                     <div>
                         <label class="text-gray-500">E-mail</label>
-                        <div class="text-gray-900 font-medium">lindablair@mail.com</div>
+                        <div class="text-gray-900 font-medium">{{ userInfo?.email ?? 'Nil' }}</div>
                     </div>
                     </div>
                     <div class="text-gray-600 flex gap-x-3">
@@ -126,7 +128,7 @@
                        <div>
                              
                         <label class="text-gray-500">Phone Number</label>
-                        <div class="text-gray-900 font-medium">050 414 8778</div>
+                        <div class="text-gray-900 font-medium">{{ userInfo?.phone ?? 'Nil' }}</div>
                        </div>
                     </div>
                     <div class="text-gray-600 flex gap-x-3">
@@ -145,7 +147,7 @@
                             
                 <div>
                     <label class="text-gray-500">Join Date</label>
-                    <div class="text-gray-900 font-medium">1 Day Ago</div>
+                    <div class="text-gray-900 font-medium">{{ userInfo?.createdAt ?? 'Nil' }}</div>
                 </div>
                     </div>
                     <div class="text-gray-600 flex gap-x-3">
@@ -164,7 +166,7 @@
                             
                     <div>
                         <label class="text-gray-500">Last Online</label>
-                        <div class="text-gray-900 font-medium">1 Day Ago</div>
+                        <div class="text-gray-900 font-medium">{{ userInfo?.lastSeen ?? 'Nil' }}</div>
                     </div>
                     </div>
 
@@ -182,8 +184,8 @@
                                 </svg>
                                 
                             Chat</button>
-                        <button class="bg-[#690571] text-white w-full py-3 rounded-md flex items-center gap-x-3 justify-center font-semibold">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <a :href="mailtoLink" class="bg-[#690571] text-white w-full py-3 rounded-md flex items-center gap-x-3 justify-center font-semibold">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_7368_1134)">
                                 <path d="M15.9693 3.69531L10.3573 9.30731C9.73158 9.93148 8.88383 10.282 8 10.282C7.11617 10.282 6.26842 9.93148 5.64267 9.30731L0.0306667 3.69531C0.0213333 3.80065 0 3.89598 0 4.00065V12.0006C0.00105857 12.8844 0.352588 13.7316 0.97748 14.3565C1.60237 14.9814 2.4496 15.3329 3.33333 15.334H12.6667C13.5504 15.3329 14.3976 14.9814 15.0225 14.3565C15.6474 13.7316 15.9989 12.8844 16 12.0006V4.00065C16 3.89598 15.9787 3.80065 15.9693 3.69531Z" fill="white"/>
                                 <path d="M9.41464 8.3653L15.504 2.2753C15.209 1.78618 14.7929 1.38133 14.296 1.09979C13.799 0.818251 13.2378 0.669529 12.6666 0.667969H3.33331C2.76212 0.669529 2.20097 0.818251 1.70399 1.09979C1.20701 1.38133 0.790957 1.78618 0.495972 2.2753L6.58531 8.3653C6.96102 8.73951 7.4697 8.94961 7.99997 8.94961C8.53025 8.94961 9.03893 8.73951 9.41464 8.3653Z" fill="white"/>
@@ -193,15 +195,19 @@
                                 <rect width="16" height="16" fill="white"/>
                                 </clipPath>
                                 </defs>
-                                </svg>
+                                </svg> Email
+                            </a>
+                                <!-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button class="bg-[#690571] text-white w-full py-3 rounded-md flex items-center gap-x-3 justify-center font-semibold">
+                            
                                 
-                            Email</button>
+                            Email</button> -->
                     </div>
                 </div>
               </div>
             </section>
             <div class="w-full">
-                <div class="bg-white flex items-start gap-x-10 w-full">
+                <div class="bg-white overflow-x-auto flex items-start gap-x-10 w-full">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 w-full">
                         <div class="stat-card border shadow-sm border-gray-50 py-6 flex justify-between bg-white rounded-lg p-3"
                             v-for="({ name, count, icon }, idx) in stats" :key="idx">
@@ -550,7 +556,29 @@ definePageMeta({
     //   middleware: 'auth'
 })
 
+const showUpdateUserModal = ref(false)
+
 const activeTab = ref('project')
+
+const userInfo = ref({});
+
+// Reactive properties for email details
+const emailSubject = ref('Your Subject');
+const emailBody = ref('Your Message');
+
+const mailtoLink = computed(() => {
+  return `mailto:${encodeURIComponent(userInfo.value.email)}?subject=${encodeURIComponent(emailSubject.value)}&body=${encodeURIComponent(emailBody.value)}`;
+});
+
+onMounted(() => {
+    const user = localStorage.getItem('selected-user');
+    if (user) {
+        userInfo.value = JSON.parse(user);
+    } else {
+        userInfo.value = {}; // Set default value if no user is found
+    }
+});
+
 
 const stats = ref([
     {
