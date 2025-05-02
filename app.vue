@@ -1,131 +1,76 @@
 <template>
   <main>
-    <!-- Splash Screen -->
-    <div 
-      v-if="showSplash" 
-      class="fixed inset-0 flex items-center justify-center bg-white z-[9999999] transition-opacity duration-500"
-      :class="{'opacity-0': splashTransitioning}"
-    >
-      <!-- <div class="animate-bounce text-4xl font-bold">Loading...</div> -->
-      <img alt=""
-            src="@/assets/img/landing.png"
-            class="absolute inset-0 h-full w-full object-cover opacity-80" />
-    </div>
+      <CoreToast class="fixed top-4 right-4 z-[9999999]" />
+    <NuxtLayout class="z-10">
+      <NuxtPage class="z-10" />
+    </NuxtLayout>
 
-    <!-- Main Content -->
-    <div v-if="!showSplash">
-      <CoreToast class="fixed top-4 right-4 z-[999999]" />
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </div>
+    <!-- Global Modals -->
+    <!-- <NotificationsModal v-if="notificationsStore.isOpen" @close="notificationsStore.closeNotifications" />
+    <ConfirmationModal 
+      v-if="confirmationStore.isOpen" 
+      :title="confirmationStore.title"
+      :message="confirmationStore.message"
+      @confirm="confirmationStore.onConfirm"
+      @cancel="confirmationStore.onCancel"
+    /> -->
   </main>
 </template>
 
-<style lang="css">
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
-  #app {
-    @apply min-h-screen font-sans;
-  }
-</style>
-
-<!-- <script setup lang="ts">
-import { provide, ref, onMounted } from 'vue';
-import { useRouter } from 'nuxt/app';
-
-// Import custom toast composable
-import { visible, toastData, useCustomToast } from '@/composables/core/useCustomToast';
-
-// Provide toast state globally
-provide('toastVisible', visible);
-provide('toastData', toastData);
-
-// Splash screen control
-const showSplash = ref(true);
-const splashTransitioning = ref(false);
-
-// Initialize the router
-const router = useRouter();
-
-onMounted(() => {
-  // Show splash screen for 3 seconds, then transition out
-  setTimeout(() => {
-    splashTransitioning.value = true;
-    setTimeout(() => {
-      showSplash.value = false;
-      // Redirect to /auth
-      router.push('/auth');
-    }, 500); // Allow transition duration before hiding splash completely
-  }, 3000); // Display splash for 3 seconds
-});
-</script> -->
-
 <script setup lang="ts">
-import { useUser } from '@/composables/auth/user'
-import { provide, ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'nuxt/app';
-import { useCustomToast } from '@/composables/core/useCustomToast';
-const { user, logOut, token, isLoggedIn } = useUser()
-
+import { provide } from 'vue';
 import { visible, toastData } from '@/composables/core/useCustomToast';
 
-// Provide toast state globally
+
+// Provide the toast state globally
 provide('toastVisible', visible);
 provide('toastData', toastData);
-
-const showSplash = ref(true);
-const splashTransitioning = ref(false);
-const router = useRouter();
-const route = useRoute();
-
-// Function to check if the user is logged in
-
-// onMounted(() => {
-//   // Show splash screen for 3 seconds, then transition out
-//   setTimeout(() => {
-//     splashTransitioning.value = true;
-//     setTimeout(() => {
-//       showSplash.value = false;
-
-//       if (isLoggedIn.value) {
-//         // If user is authenticated, redirect to the intended route or dashboard
-//         const intendedRoute = localStorage.getItem('intendedRoute') || '/dashboard';
-//         router.push(intendedRoute);
-//         localStorage.removeItem('intendedRoute'); // Clear after redirect
-//       } else {
-//         // If user is not authenticated, store current route and redirect to /auth
-//         localStorage.setItem('intendedRoute', route.fullPath);
-//         router.push('/auth');
-//       }
-//     }, 500); // Allow transition duration before hiding splash completely
-//   }, 2000); // Display splash for 3 seconds
-// });
-
-onMounted(() => {
-  // Show splash screen for a shorter duration, e.g., 1.5 seconds
-  setTimeout(() => {
-    splashTransitioning.value = true; // Start the transition out
-  }, 1500); // Adjust display duration for the splash screen
-
-  // Complete splash transition and route redirection
-  setTimeout(() => {
-    showSplash.value = false;
-
-    // if (isLoggedIn.value) {
-    //   // Redirect authenticated user to the intended route or dashboard
-    //   const intendedRoute = localStorage.getItem('intendedRoute') || '/dashboard';
-    //   router.push(intendedRoute);
-    //   localStorage.removeItem('intendedRoute'); // Clear after redirect
-    // } else {
-    //   // Store current route and redirect unauthenticated user to /auth
-    //   localStorage.setItem('intendedRoute', route.fullPath);
-    //   router.push('/auth');
-    // }
-  }, 2000); // 500ms after transition starts, hide splash and redirect
-});
-
 </script>
 
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  @apply antialiased text-gray-800;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
+</style>
