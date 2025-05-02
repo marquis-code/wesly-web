@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   },
   plugins: [],
   modules: [],
+  css: ["/assets/css/main.css"],
   build: {
     transpile: ["lucide-vue-next"],
   }
