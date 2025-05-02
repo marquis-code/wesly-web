@@ -11,18 +11,12 @@ export default defineNuxtConfig({
   },
   plugins: ["~/plugins/aos.client.ts"],
   modules: ['@kevinmarrec/nuxt-pwa', "nuxt-emoji-picker"],
-  nitro: {
-    prerender: {
-      routes: ['/'],  // Specify only static, easily prerenderable routes here
-      ignore: ['/dashboard', '/dashboard/content', '/dashboard/challenge/create', '/dashboard/challenge']
-    }
-  },
   pwa: {
     workbox: {
       enabled: true
     },
     meta: {
-      title: "Chub Admin",
+      title: "Prayer Streak",
       author: "Marquis",
       mobileAppIOS: false,
       mobileApp: true,
