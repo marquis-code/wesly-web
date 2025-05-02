@@ -7,10 +7,12 @@
       <!-- Right Side Actions -->
       <div class="flex items-center gap-4">
         <!-- Notifications -->
-         <div class="border rounded-lg p-4 space-y-4">
+         <div class="border flex items-center space-x-3 rounded-lg p-4">
            <p class="bg-[#0000FF] text-xs text-white px-3 py-1 rounded-lg">Subscription plan</p>
-           <p v-if="!profileData?.subscription?.plan_id" class="text-[#E91000] font-medium">No Active Plan</p>
-           <p v-else class="text-[#0000FF">Monthly Plan/<span class="text-[#1EA41E] font-semibold">28 days left</span></p>
+          <div>
+            <p v-if="!profileData?.subscription?.plan_id" class="text-[#E91000] font-medium">No Active Plan</p>
+            <p v-else class="text-[#0000FF">Monthly Plan/<span class="text-[#1EA41E] font-semibold">28 days left</span></p>
+          </div>
          </div>
         <button class="p-2 hover:bg-gray-100 rounded-full relative">
           <BellIcon size="20" />

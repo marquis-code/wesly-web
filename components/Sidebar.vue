@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen bg-blue-950 relative">
+  <div class="h-screen bg-[#0D0D43] relative">
     <!-- Mobile hamburger button -->
     <button 
       @click="toggleSidebar" 
-      class="fixed top-4 left-4 z-50 lg:hidden bg-blue-950 text-white p-2 rounded-md shadow-md"
+      class="fixed top-4 left-4 z-50 lg:hidden bg-[#0D0D43] text-white p-2 rounded-md shadow-md"
       aria-label="Toggle sidebar"
     >
       <MenuIcon v-if="!isSidebarOpen" size="24" />
@@ -18,7 +18,7 @@
     ></div>
     
     <div 
-      :class="`w-60 bg-blue-950 text-white flex flex-col transition-all duration-300 z-40 ${sidebarClasses}`"
+      :class="`w-60 bg-[#0D0D43] text-white flex flex-col transition-all duration-300 z-40 ${sidebarClasses}`"
     >
       <!-- Logo -->
       <div class="p-4 border-b border-blue-900 flex items-center">
@@ -106,7 +106,7 @@
         </NuxtLink>
         
         <!-- Chat -->
-        <button class="nav-link">
+        <button class="nav-link w-full">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M16.9999 10.8054C16.9999 10.4594 16.9999 10.2864 17.0519 10.1324C17.2029 9.68437 17.6019 9.51137 18.0019 9.32937C18.4499 9.12437 18.6739 9.02237 18.8969 9.00437C19.1489 8.98437 19.4019 9.03837 19.6179 9.15937C19.9039 9.31937 20.1039 9.62537 20.3079 9.87337C21.2509 11.0194 21.7229 11.5924 21.8949 12.2234C22.0349 12.7334 22.0349 13.2674 21.8949 13.7764C21.6439 14.6984 20.8489 15.4704 20.2599 16.1864C19.9589 16.5514 19.8079 16.7344 19.6179 16.8414C19.3982 16.9632 19.1473 17.0172 18.8969 16.9964C18.6739 16.9784 18.4499 16.8764 18.0009 16.6714C17.6009 16.4894 17.2029 16.3164 17.0519 15.8684C16.9999 15.7144 16.9999 15.5414 16.9999 15.1954V10.8054ZM6.99991 10.8054C6.99991 10.3694 6.98791 9.97837 6.63591 9.67237C6.50791 9.56137 6.33791 9.48437 5.99891 9.32937C5.54991 9.12537 5.32591 9.02237 5.10291 9.00437C4.43591 8.95037 4.07691 9.40637 3.69291 9.87437C2.74891 11.0194 2.27691 11.5924 2.10391 12.2244C1.96471 12.7327 1.96471 13.2691 2.10391 13.7774C2.35591 14.6984 3.15191 15.4714 3.73991 16.1864C4.11091 16.6364 4.46591 17.0474 5.10291 16.9964C5.32591 16.9784 5.54991 16.8764 5.99891 16.6714C6.33891 16.5174 6.50791 16.4394 6.63591 16.3284C6.98791 16.0224 6.99991 15.6314 6.99991 15.1964V10.8054Z" stroke="#2998FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M5 9C5 5.686 8.134 3 12 3C15.866 3 19 5.686 19 9M19 17V17.8C19 19.567 17.21 21 15 21H13" stroke="#2998FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -122,7 +122,7 @@
       
       <!-- Logout -->
       <div class="p-4 border-t border-blue-900 first-line:">
-        <button @click="logout" class="nav-link text-red-400 hover:bg-blue-900">
+        <button @click="logout" class="nav-link w-full text-red-400 hover:bg-blue-900">
           <LogOutIcon size="20" />
           <span>Log out</span>
         </button>
@@ -204,6 +204,6 @@ onBeforeUnmount(() => {
 }
 
 .active {
-  @apply bg-[#0000FF];
+  @apply bg-[#0D0D43];
 }
 </style>

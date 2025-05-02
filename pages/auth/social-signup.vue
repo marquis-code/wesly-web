@@ -33,15 +33,34 @@ definePageMeta({
 </script>
 
 <template>
+<main>
   <div class="auth-callback">
     <div v-if="loading" class="spinner-wrapper">
       <div class="spinner" />
       <p>Signing you up...</p>
     </div>
+    <div v-if="route.query.error">
+      <p>{{route.query.error}}</p>
+    </div>
     <div v-else>
       <p>Something went wrong. Please try again.</p>
     </div>
   </div>
+
+  <CoreBaseModal :show="route.query.error">
+    <div class="space-y-6 flex justify-center items-center flex-col p-10">
+      <img src="@/assets/icons/trade-logo.svg" />
+       <p class="text-center text-2xl">{{route.query.error}}</p>
+
+       <button
+                @click="router.push('/signin')"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#0000FF] focus:outline-none focus:ring-2 focus:ring-offset-2 "
+              >
+                 Sign In
+       </button>
+    </div>
+  </CoreBaseModal>
+</main>
 </template>
 
 <style scoped>

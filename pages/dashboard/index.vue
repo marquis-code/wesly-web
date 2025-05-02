@@ -4,14 +4,16 @@
     <AccountSummary  v-if="profileData?.user?.activation === 0" />
     <!-- {{profileData.user.activation}} -->
 
-     <UnActivatedCard @connectExchange="handleExchangeConnectModal" />
+     <UnActivatedCard v-if="profileData?.subscription_status" @connectExchange="handleExchangeConnectModal" />
+
+     <SubscriptionAlert v-if="!profileData?.subscription_status" planUrl="/dashboard/bot-subscription" />
 
     <ActiveDashboard v-if="profileData?.user?.activation === 0" />
     
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
 
- <div class="bg-white rounded-lg shadow-sm p-6">
+ <div class="bg-white disabled:cursor-not-allowed disabled:opacity-25 opacity-50 rounded-lg shadow-sm p-6">
         <div class="flex items-center gap-4 mb-4">
           <div class="bg-orange-100 p-2 rounded-md">
             <TrendingUpIcon size="24" class="text-orange-500" />
@@ -28,14 +30,14 @@
           <span class="bg-green-100 text-green-800 px-3 py-1 rounded-md text-sm">Custom Signal</span>
         </div>
         
-        <button @click="router.push('/dashboard/smart-bot')" class="bg-[#0000FF] hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+        <button disabled @click="router.push('/dashboard/smart-bot')" class="bg-[#0000FF] hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
           <PlusIcon size="18" />
           Start new Bot
         </button>
       </div>
 
 
-      <div class="bg-white disabled:cursor-not-allowed disabled:opacity-25 opacity-20 rounded-lg shadow-sm p-6">
+      <div class="bg-white disabled:cursor-not-allowed disabled:opacity-25 opacity-50 rounded-lg shadow-sm p-6">
         <div class="flex items-center gap-4 mb-4">
           <div class="bg-green-100 p-2 rounded-md">
             <WifiIcon size="24" class="text-green-500" />
@@ -52,7 +54,7 @@
           <span class="text-[#0000FF] px-3 py-1 rounded-md text-sm">Custom Signal</span>
         </div>
         
-        <button @click="router.push('/dashboard/signal-bot')" class="bg-[#0000FF] hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+        <button disabled @click="router.push('/dashboard/signal-bot')" class="bg-[#0000FF] hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2">
           <PlusIcon size="18" />
           Start new Bot
         </button>

@@ -66,7 +66,7 @@ export const useUser = () => {
     runtimeData.accessToken.value = "";
     runtimeData.refreshToken.value = "";
     runtimeData.role.value = "";
-    location.href = '/tenant/login';
+    location.href = '/signin';
   };
 
   const setTokens = (accessToken: string, refreshToken: string) => {

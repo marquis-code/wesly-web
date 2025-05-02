@@ -12,6 +12,7 @@ export const useSubscribe = () => {
     try {
       const res = await plans_api.$_subscribe(payload) as any;
       if (res.type !== 'ERROR') {
+        window.location.reload()
         return res;
       } else {
         showToast({
