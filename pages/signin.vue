@@ -165,6 +165,11 @@
     router.push('/dashboard')
   }
 
+  const continueWithGoogle = () => {
+    // Redirect to the Google signup URL in the same tab
+    window.location.href = 'https://api.desmarttrader.com/api/v1/google/signup';
+  }
+
   definePageMeta({
       layout: 'auth'
   })

@@ -262,7 +262,7 @@ const submitForm = async () => {
 
 const continueWithGoogle = () => {
     // Redirect to the Google signup URL in the same tab
-    window.location.href = 'http://5.189.157.41:8090/api/v1/google/signup';
+    window.location.href = 'https://api.desmarttrader.com//api/v1/google/signup';
   }
 
 const toggleConfirmPassword = () => {

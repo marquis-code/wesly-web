@@ -1,49 +1,24 @@
 <script lang="ts" setup>
+import { useUser } from "@/composables/auth/user"
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useFetch } from '#app'
 
 const route = useRoute()
 const router = useRouter()
 
 const loading = ref(true) // loading spinner state
+const { setTokens }  = useUser()
 
 onMounted(async () => {
-  const code = route.query.code as string
-  const state = route.query.state as string
-  const scope = route.query.scope as string
-  const authuser = route.query.authuser as string
-  const prompt = route.query.prompt as string
+  const token = route.query.access_token as string
 
-  if (!code || !state) {
-    console.error('Missing required parameters')
+  if (!token) {
     loading.value = false
     return
   }
 
-  try {
-    const { data, error } = await useFetch('/api/auth/google-callback', {
-      method: 'POST',
-      body: {
-        code,
-        state,
-        scope,
-        authuser,
-        prompt
-      }
-    })
-
-    if (error.value) {
-      console.error('API error:', error.value)
-      loading.value = false
-    } else {
-      // Navigate on success
-      router.push('/dashboard')
-    }
-  } catch (e) {
-    console.error('Request failed:', e)
-    loading.value = false
-  }
+  setTokens(token, token)
+  router.push('/dashboard')
 })
 
 definePageMeta({
