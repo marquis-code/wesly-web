@@ -5,15 +5,6 @@
       <NuxtPage class="z-10" />
     </NuxtLayout>
 
-    <!-- Global Modals -->
-    <!-- <NotificationsModal v-if="notificationsStore.isOpen" @close="notificationsStore.closeNotifications" />
-    <ConfirmationModal 
-      v-if="confirmationStore.isOpen" 
-      :title="confirmationStore.title"
-      :message="confirmationStore.message"
-      @confirm="confirmationStore.onConfirm"
-      @cancel="confirmationStore.onCancel"
-    /> -->
   </main>
 </template>
 
