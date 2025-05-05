@@ -46,9 +46,9 @@
   // Default configuration for the TradingView widget
   const widgetConfig: TradingViewWidgetConfig = {
     symbols: [
-      ["Apple", "AAPL|1D"],
-      ["Google", "GOOGL|1D"],
-      ["Microsoft", "MSFT|1D"]
+      // ["Apple", "AAPL|1D"],
+      // ["Google", "GOOGL|1D"],
+      // ["Microsoft", "MSFT|1D"]
     ],
     chartOnly: false,
     width: "100%",
