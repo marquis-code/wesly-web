@@ -3,9 +3,9 @@
     <div class="tradingview-widget-container w-full h-full">
       <div ref="widgetContainer" class="tradingview-widget-container__widget w-full h-full"></div>
       <div class="tradingview-widget-copyright text-xs mt-1">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank" class="text-blue-400 hover:text-blue-500">
+        <!-- <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank" class="text-blue-400 hover:text-blue-500">
           Track all markets on TradingView
-        </a>
+        </a> -->
       </div>
     </div>
   </template>

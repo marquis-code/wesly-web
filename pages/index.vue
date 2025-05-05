@@ -30,7 +30,8 @@
           <img src="@/assets/img/trading-chart.png" alt="Trading Chart" class="w-full rounded-lg shadow-xl" />
         </div> -->
         <div class="h-[60vh] w-full  rounded-lg overflow-hidden">
-          <ETHUSDT />
+          <!-- <ETHUSDT /> -->
+           <TradingViewChat />
       <!-- <TradingViewWidget :symbol="symbol" :theme="theme" /> -->
     </div>
       </div>
@@ -305,6 +306,7 @@
 </template>
 
 <script setup lang="ts">
+import TradingBots from "../components/TradingBots.vue";
 const faqs = ref([
   {
     question: 'Is crypto trading Bot profitable?',
