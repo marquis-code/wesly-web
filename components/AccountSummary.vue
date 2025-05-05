@@ -1,6 +1,7 @@
 <template>
     <div class="bg-blue-50 rounded-lg p-4 mb-6 flex flex-wrap gap-4">
       <!-- Account Dropdown -->
+       {{balance}}
       <div class="flex-1 min-w-[200px]">
         <div class="bg-blue-200 text-blue-800 px-3 py-1 rounded-md inline-block mb-2">
           Your Account
@@ -36,7 +37,9 @@
   </template>
   
   <script setup lang="ts">
+  import { useFetchKrakenBalance } from "@/composables/modules/kraken/useFetchBalances"
   import { ChevronDownIcon } from 'lucide-vue-next';
+  const { balance, loading } = useFetchKrakenBalance()
   
   defineProps({
     showConnectButton: {

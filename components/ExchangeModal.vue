@@ -1,27 +1,9 @@
 <template>
-  <div v-if="show" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div v-if="show" class="fixed inset-0 bg-black  bg-opacity-80 flex items-center justify-center z-50">
     <div class="bg-white rounded-3xl p-8 max-w-4xl w-full mx-4">
       <div class="flex justify-between items-center mb-8">
-        <h2 class="text-3xl font-bold">Connect an exchange</h2>
+        <h2 class="text-xl font-bold">Connect an exchange</h2>
         <button @click="closeModal" class="text-3xl">&times;</button>
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex mb-8 bg-gray-100 py-3 max-w-sm mx-auto justify-center items-center rounded-lg">
-        <button 
-          class="px-8 py-3 rounded-lg" 
-          :class="activeTab === 'spot' ? 'bg-white' : ''"
-          @click="activeTab = 'spot'"
-        >
-          Spot
-        </button>
-        <button 
-          class="px-8 py-3 rounded-lg" 
-          :class="activeTab === 'futures' ? 'bg-white' : ''"
-          @click="activeTab = 'futures'"
-        >
-          Futures
-        </button>
       </div>
 
       <!-- Exchange Grid -->
@@ -32,7 +14,7 @@
           class="border rounded-lg p-4 flex items-center justify-center cursor-pointer hover:border-blue-500"
           @click="selectExchange(exchange)"
         >
-          <img :src="exchange.logo" :alt="exchange.name" class="h-8">
+          <img src="@/assets/icons/kraken.svg" :alt="exchange.name" class="h-8">
         </div>
       </div>
     </div>
@@ -43,7 +25,7 @@
     <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4">
       <div class="flex justify-between items-center mb-6">
         <div class="flex items-center">
-          <img :src="selectedExchange?.logo" :alt="selectedExchange?.name" class="h-8 mr-2">
+          <img src="@/assets/icons/kraken.svg" :alt="selectedExchange?.name" class="h-8w-8 mr-2">
         </div>
         <button @click="closeApiModal" class="text-3xl">&times;</button>
       </div>
@@ -69,10 +51,11 @@
       </div>
       
       <button 
-        @click="connectExchange" 
-        class="bg-blue-600 text-white py-3 px-6 rounded-lg"
+        @click="handleConnection" 
+        :disabled="connecting"
+        class="bg-blue-600 disabled:cursor-not-allowed disabled:opacity-25 text-white py-3 px-6 rounded-lg"
       >
-        Connect
+        {{ connecting ? 'Processing...' : 'Connect' }}
       </button>
     </div>
   </div>
@@ -85,6 +68,10 @@ import logo3 from '@/assets/icons/coinbase.svg'
 import logo4 from '@/assets/icons/kraken.svg'
 import logo5 from '@/assets/icons/bybit.svg'
 import logo6 from '@/assets/icons/bitget.svg'
+import { useFetchExchanges } from "@/composables/modules/exchanges/useGetExchanges"
+import { useConnectToExchange } from "@/composables/modules/exchanges/useConnectToExchange"
+const { exchanges, loading:fetchingExchanges } = useFetchExchanges()
+const { connectToExchange,loading: connecting } = useConnectToExchange()
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -102,23 +89,13 @@ const selectedExchange = ref<{ id: string, name: string, logo: string } | null>(
 const apiKey = ref('');
 const apiSecret = ref('');
 
-// Sample exchange list - you would likely fetch this from an API
-const exchanges = [
-  { id: 'binance', name: 'Binance', logo: logo2 },
-  { id: 'kucoin', name: 'KuCoin', logo: logo1 },
-  { id: 'coinbase', name: 'Coinbase', logo: logo3 },
-  { id: 'bitget', name: 'Bitget', logo: logo6 },
-  { id: 'kraken', name: 'Kraken', logo: logo4 },
-  { id: 'bybit', name: 'Bybit', logo: logo5 },
-  { id: 'kucoin2', name: 'KuCoin', logo: logo1 },
-  { id: 'bitget2', name: 'Bitget', logo: logo6 },
-];
 
 function closeModal() {
   emit('close');
 }
 
-function selectExchange(exchange: { id: string, name: string, logo: string }) {
+
+function selectExchange(exchange: any) {
   selectedExchange.value = exchange;
   showApiModal.value = true;
 }
@@ -146,4 +123,17 @@ function connectExchange() {
   closeApiModal();
   closeModal();
 }
+
+
+const payloadObj = {
+    exchange_id: selectedExchange?.value?.uuid,
+    private_key: apiKey?.value,
+    public_key: apiSecret?.value,
+}
+
+const handleConnection = async () => {
+  await connectToExchange(payloadObj)
+  emit('close');
+}
+
 </script>

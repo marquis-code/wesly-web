@@ -24,7 +24,9 @@ export const useFetchBots = () => {
     }
   };
 
-  onMounted(fetchBots);
+  onMounted(() => {
+    fetchBots()
+  });
 
   return { bots, loading, fetchBots };
 };

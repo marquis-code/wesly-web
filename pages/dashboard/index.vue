@@ -1,14 +1,18 @@
 <template>
 <main>
   <div class="p-6">
-    <AccountSummary  v-if="profileData?.user?.activation === 0" />
+    <!-- {{profileData}} -->
+    <!-- subscription_status -->
+    <!-- bot_status -->
+    <!-- exchange_status -->
+    <AccountSummary v-if="profileData?.exchange_status"  />
     <!-- {{profileData.user.activation}} -->
 
      <UnActivatedCard v-if="profileData?.subscription_status" @connectExchange="handleExchangeConnectModal" />
 
-     <SubscriptionAlert v-if="!profileData?.subscription_status" planUrl="/dashboard/bot-subscription" />
+     <SubscriptionAlert  planUrl="/dashboard/bot-subscription" />
 
-    <ActiveDashboard v-if="profileData?.user?.activation === 0" />
+    <ActiveDashboard v-if="profileData?.bot_status" />
     
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
@@ -63,34 +67,35 @@
     
 
 <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-6">Top Exchange in your country</h2>
+      <h2 class="text-lg font-semibold mb-6">Top Exchange in your country</h2>
       
-      <div class="overflow-x-auto">
+      <div v-if="!fetchingExchanges && exchanges?.length" class="overflow-x-auto">
         <table class="w-full">
           <thead>
             <tr class="text-left text-gray-600 border-b">
-              <th class="pb-3">Exchange</th>
-              <th class="pb-3">Account Type</th>
-              <th class="pb-3">Instruments</th>
-              <th class="pb-3">Connect existing account</th>
-              <th class="pb-3">Create new account</th>
+              <th class="pb-3 text-sm">Exchange</th>
+              <th class="pb-3 text-sm">Account Type</th>
+              <th class="pb-3 text-sm">Instruments</th>
+              <th class="pb-3 text-sm">Connect existing account</th>
+              <th class="pb-3 text-sm">Create new account</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(exchange, index) in exchanges" :key="index" class="border-b">
+            <tr v-for="(exchange, index) in exchanges" :key="index" class="border-b text-sm">
               <td class="py-4 flex items-center gap-2">
-                <div class="bg-orange-100 p-1 rounded-full">
-                  <BitcoinIcon size="20" class="text-orange-500" />
+                <div class="rounded-full">
+                  <img src="@/assets/icons/kraken.svg"  class="h-8 border w-10 rounded-full">
                 </div>
                 {{ exchange.name }}
               </td>
-              <td class="py-4">{{ exchange.accountType }}</td>
-              <td class="py-4">Signal Bot</td>
+              <td class="py-4">{{ exchange.account_type }}</td>
+              <td class="py-4">{{ exchange?.instrument}}</td>
               <td class="py-4">
-                <button class="flex items-center gap-1 text-blue-600 hover:underline">
+                <button @click="showExchangeModal = true" v-if="!exchange?.is_connected" class="flex items-center gap-1 text-blue-600 hover:underline">
                   <LinkIcon size="16" />
                   Connect
                 </button>
+                <p v-else>Connected</p>
               </td>
               <td class="py-4">
                 <button class="flex items-center gap-1 text-blue-600 hover:underline">
@@ -102,6 +107,9 @@
           </tbody>
         </table>
       </div>
+
+      <div class="text-center text-sm py-10 border-[0.5px] rounded-lg" v-else-if="fetchingExchanges && !exchange?.length">Please wait while we fetch exchanges....</div>
+      <div v-else class="flex justify-center items-center py-10 rounded-xl border-[0.5px]">No Exchanges Found</div>
     </div>
   </div>
   <ExchangeModal 
@@ -114,6 +122,8 @@
 
 <script setup lang="ts">
 import { useProfile } from "@/composables/modules/auth/useProfile"
+import { useFetchBots } from "@/composables/modules/bots/useFetchBots"
+import { useFetchExchanges } from "@/composables/modules/exchanges/useGetExchanges"
 const router = useRouter()
 import { 
   TrendingUpIcon, 
@@ -123,17 +133,19 @@ import {
   LinkIcon 
 } from 'lucide-vue-next';
 const { loading, profileData } = useProfile()
+const { bots, loading: fetchingBots } = useFetchBots()
+const { exchanges, loading:fetchingExchanges } = useFetchExchanges()
 
 // Sample exchange data
-const exchanges = ref([
-  { name: 'Binance', accountType: 'Soft, margin, Future' },
-  { name: 'Bybit', accountType: 'Spot, Futures' },
-  { name: 'OKX', accountType: 'Spot' },
-  { name: 'Kucoin', accountType: 'Spot' },
-  { name: 'Binance TR', accountType: 'Soft, margin, Future' },
-  { name: 'Binance US', accountType: 'Spot, Futures' },
-  { name: 'Coinbase Advanced', accountType: 'Spot, Futures' }
-])
+// const exchanges = ref([
+//   { name: 'Binance', accountType: 'Soft, margin, Future' },
+//   { name: 'Bybit', accountType: 'Spot, Futures' },
+//   { name: 'OKX', accountType: 'Spot' },
+//   { name: 'Kucoin', accountType: 'Spot' },
+//   { name: 'Binance TR', accountType: 'Soft, margin, Future' },
+//   { name: 'Binance US', accountType: 'Spot, Futures' },
+//   { name: 'Coinbase Advanced', accountType: 'Spot, Futures' }
+// ])
 
 const showExchangeModal = ref(false);
 const connectedExchanges = ref<any[]>([]);

@@ -1,7 +1,8 @@
 <template>
     <div class="p-6">
       <!-- Account Summary -->
-      <AccountSummary :showConnectButton="false" />
+      <AccountSummary v-if="profileData?.exchange_status" :showConnectButton="false" />
+      <!-- {{bots}} -->
       
       <!-- Today's Profit and Loss -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -41,53 +42,16 @@
         </div>
       </div>
       
-      <!-- Bot Status Tabs -->
-      <div class="flex gap-2 mb-6">
-        <button class="px-4 py-2 bg-gray-100 rounded-md font-medium">All (0)</button>
-        <button class="px-4 py-2 bg-white rounded-md">Active (0)</button>
-        <button class="px-4 py-2 bg-white rounded-md">Stopped (0)</button>
-      </div>
-      
-      <!-- Bots Section -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h2 class="text-xl font-semibold mb-4">Bots</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="relative">
-            <select class="w-full p-2 border border-gray-300 rounded-md appearance-none pr-8">
-              <option>All accounts</option>
-            </select>
-            <ChevronDownIcon size="16" class="absolute right-2 top-3 text-gray-500" />
-          </div>
-          
-          <div class="relative">
-            <select class="w-full p-2 border border-gray-300 rounded-md appearance-none pr-8">
-              <option>All Pairs</option>
-            </select>
-            <ChevronDownIcon size="16" class="absolute right-2 top-3 text-gray-500" />
-          </div>
-          
-          <div class="relative">
-            <select class="w-full p-2 border border-gray-300 rounded-md appearance-none pr-8">
-              <option>Strategies</option>
-            </select>
-            <ChevronDownIcon size="16" class="absolute right-2 top-3 text-gray-500" />
-          </div>
-        </div>
-        
-        <!-- No Active Bots Message -->
-        <div class="flex flex-col items-center justify-center py-12">
-          <div class="bg-green-100 p-3 rounded-full mb-4">
-            <WifiIcon size="32" class="text-green-500" />
-          </div>
-          <p class="text-gray-600">No Active bots yet</p>
-        </div>
-      </div>
+      <TradingBots />
     </div>
   </template>
   
   <script setup lang="ts">
+  import { useProfile } from "@/composables/modules/auth/useProfile"
   import { ChevronDownIcon, WifiIcon } from 'lucide-vue-next';
+  import { useFetchBots } from "@/composables/modules/bots/useFetchBots"
+  const { bots, loading } = useFetchBots()
+  const { loading: fetchingProfile, profileData } = useProfile()
   definePageMeta({
       layout: 'dashboard'
   })

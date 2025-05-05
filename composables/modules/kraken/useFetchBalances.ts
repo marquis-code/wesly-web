@@ -24,7 +24,9 @@ export const useFetchKrakenBalance = () => {
     }
   };
 
-  onMounted(fetchBalance);
+  onMounted(() => {
+    fetchBalance()
+  });
 
   return { balance, loading, fetchBalance };
 };
