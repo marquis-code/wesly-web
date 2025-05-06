@@ -5,14 +5,14 @@
     <!-- subscription_status -->
     <!-- bot_status -->
     <!-- exchange_status -->
-    <AccountSummary v-if="profileData?.exchange_status"  />
+    <AccountSummary v-if="profileData?.exchange_status && profileData?.bot_status"  />
     <!-- {{profileData.user.activation}} -->
 
      <UnActivatedCard v-if="profileData?.subscription_status" @connectExchange="handleExchangeConnectModal" />
 
-     <SubscriptionAlert  planUrl="/dashboard/bot-subscription" />
+     <SubscriptionAlert v-if="!profileData?.subscription_status"  planUrl="/dashboard/bot-subscription" />
 
-    <ActiveDashboard v-if="profileData?.bot_status" />
+    <ActiveDashboard v-if="profileData?.bot_status && profileData?.subscription_status" />
     
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">

@@ -3,7 +3,7 @@
       <!-- Page Title -->
       <h1 class="text-xl font-semibold">{{ pageTitle }}</h1>
       <!-- {{profileData}} -->
-      
+      <!-- {{profileData?.subscription?.plan?.name}} -->
       <!-- Right Side Actions -->
       <div class="flex items-center gap-4">
         <!-- Notifications -->
@@ -11,7 +11,7 @@
            <p class="bg-[#0000FF] text-xs text-white px-3 py-1 rounded-lg">Subscription plan</p>
           <div>
             <p v-if="!profileData?.subscription?.plan_id" class="text-[#E91000] font-medium">No Active Plan</p>
-            <p v-else class="text-[#0000FF">Monthly Plan/<span class="text-[#1EA41E] font-semibold">28 days left</span></p>
+            <p v-else class="text-[#0000FF">{{profileData?.subscription?.plan?.name}}/<span class="text-[#1EA41E] font-semibold">{{profileData?.subscription?.plan?.period_days}} days left</span></p>
           </div>
          </div>
         <button class="p-2 hover:bg-gray-100 rounded-full relative">
