@@ -31,7 +31,8 @@
       </div>
       
       <p class="mb-6">Create your API keys on {{ selectedExchange?.name }} paste them below and click "Create".</p>
-      
+      <!-- {{apiKey}} -->
+       <!-- {{selectedExchange}} -->
       <div class="mb-4">
         <label class="block text-lg mb-2">Insert API Key</label>
         <input 
@@ -40,7 +41,7 @@
           class="w-full border border-gray-300 rounded-lg p-3"
         >
       </div>
-      
+      <!-- {{apiSecret}} -->
       <div class="mb-6">
         <label class="block text-lg mb-2">Insert API Secret</label>
         <input 
@@ -125,13 +126,14 @@ function connectExchange() {
 }
 
 
+const handleConnection = async () => {
+
 const payloadObj = {
     exchange_id: selectedExchange?.value?.uuid,
     private_key: apiKey?.value,
     public_key: apiSecret?.value,
 }
 
-const handleConnection = async () => {
   await connectToExchange(payloadObj)
   emit('close');
 }

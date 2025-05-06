@@ -1,6 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-50 p-4">
       <!-- Account Header -->
+       <!-- {{balance}} -->
       <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
           <div class="flex items-center mb-3 sm:mb-0">
@@ -92,7 +93,7 @@
                     class="w-full border border-gray-300 rounded-md px-3 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="" disabled>Select Exchange</option>
-                    <option v-for="exchange in exchanges" :key="exchange.id" :value="exchange.id">
+                    <option v-for="exchange in exchanges" :key="exchange.uuid" :value="exchange.uuid">
                       {{ exchange.name }}
                     </option>
                   </select>
@@ -205,8 +206,12 @@
   <script setup lang="ts">
   import { ref, reactive, onMounted } from 'vue'
   import { useCreateBot } from "@/composables/modules/bots/useCreateBot"
+  import { useFetchExchanges } from "@/composables/modules/exchanges/useGetExchanges"
+  import { useFetchKrakenBalance } from "@/composables/modules/kraken/useFetchBalances"
   import { TrendingUp, ChevronDown, MessageSquare, Loader2 } from 'lucide-vue-next'
   import { useToast } from '@/composables/useToast'
+  const { exchanges, loading: fetchingExchanges } = useFetchExchanges()
+  const { balance, loading:fetchingBalances } = useFetchKrakenBalance()
   
   // Toast composable
   const { showToast } = useToast()
@@ -235,11 +240,11 @@
   // const loading = ref(false)
   
   // Sample data
-  const exchanges = ref([
-    { id: '35cde25d-f1ca-4d37-9031-b93c5bb6adc5', name: 'Binance' },
-    { id: '2', name: 'Coinbase' },
-    { id: '3', name: 'Kraken' }
-  ])
+  // const exchanges = ref([
+  //   { id: '35cde25d-f1ca-4d37-9031-b93c5bb6adc5', name: 'Binance' },
+  //   { id: '2', name: 'Coinbase' },
+  //   { id: '3', name: 'Kraken' }
+  // ])
   
   const tradingPairs = ref([
     'BTC/USD',

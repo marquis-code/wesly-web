@@ -24,7 +24,9 @@ export const useFetchExchanges = () => {
     }
   };
 
-  onMounted(fetchExchanges);
+  onMounted(() => {
+    fetchExchanges()
+  });
 
   return { exchanges, loading, fetchExchanges };
 };
