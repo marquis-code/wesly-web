@@ -6,9 +6,15 @@
       
       <!-- Today's Profit and Loss -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="bg-white rounded-lg shadow-sm p-6">
-          <h2 class="text-gray-600 mb-2">Today's Profit and Loss</h2>
-          <div class="text-4xl font-bold text-blue-600">$50</div>
+        <div class="bg-white rounded-lg  shadow-sm p-6  flex justify-between items-center">
+            <div>
+              <h2 class="text-gray-600 mb-2">Today's Profit and Loss</h2>
+              <div class="text-4xl font-bold text-blue-600">$50</div>
+            </div>
+
+              <div class="pt-10">
+                <NuxtLink class="bg-blue-700 text-white text-sm px-6 py-2 rounded-md" to="/dashboard/create-smart">Create Smart Bot</NuxtLink>
+              </div>
         </div>
         
         <!-- PnL Statistics -->
