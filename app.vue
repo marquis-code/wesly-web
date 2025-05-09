@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <main>
       <CoreToast class="fixed top-4 right-4 z-[9999999]" />
     <NuxtLayout class="z-10">
@@ -62,6 +62,62 @@ body {
 
 .slide-up-enter-from,
 .slide-up-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
+</style> -->
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Animations */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-content-enter-active,
+.modal-content-leave-active {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-content-enter-from,
+.modal-content-leave-to {
   transform: translateY(20px);
   opacity: 0;
 }
