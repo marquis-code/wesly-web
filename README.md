@@ -1,1 +1,1 @@
-Smart Trader
+Smart Trader Admin
