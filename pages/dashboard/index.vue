@@ -10,7 +10,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 // State
-const isVerified = ref(false)
+const isVerified = ref(true)
 const router = useRouter()
 
 // Function to handle account setup completion
